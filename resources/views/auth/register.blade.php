@@ -22,12 +22,12 @@
         </div>
         
         @if(session('error'))
-            <div class="bg-red-900 border border-red-800 text-red-100 px-4 py-3 rounded relative mt-4" role="alert">
+            <div class="bg-red-900 border border-red-800 text-red-100 px-4 py-3 rounded-md relative mt-4" role="alert">
                 <span class="block sm:inline">{{ session('error') }}</span>
             </div>
         @endif
         
-        <form class="mt-6 space-y-4" action="{{ route('create') }}" method="POST">
+        <form id="registerForm" class="mt-6 space-y-4" action="{{ route('create') }}" method="POST">
             @csrf
             
             <div>
@@ -75,6 +75,7 @@
                     @error('password')
                         <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                     @enderror
+                    <p id="passwordError" class="text-red-400 text-xs mt-1 hidden">Passwords do not match</p>
                 </div>
             </div>
             
@@ -90,10 +91,11 @@
                             <line x1="1" y1="1" x2="23" y2="23"></line>
                         </svg>
                     </div>
+                    <p id="confirmPasswordError" class="text-red-400 text-xs mt-1 hidden">Passwords do not match</p>
                 </div>
             </div>
 
-            <div class="pt-2">
+            <div class="pt-4">
                 <button type="submit" 
                         class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-zinc-900">
                     Create account
@@ -156,6 +158,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
                 <line x1="1" y1="1" x2="23" y2="23"></line>
             `;
+        }
+    });
+    
+    // Password matching validation
+    const passwordErrorElem = document.getElementById('passwordError');
+    const confirmPasswordErrorElem = document.getElementById('confirmPasswordError');
+    const registerForm = document.getElementById('registerForm');
+    
+    // Function to check if passwords match
+    function checkPasswordsMatch() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        
+        if (password === '' || confirmPassword === '') {
+            passwordErrorElem.classList.add('hidden');
+            confirmPasswordErrorElem.classList.add('hidden');
+            return true;
+        }
+        
+        if (password !== confirmPassword) {
+            passwordErrorElem.classList.remove('hidden');
+            confirmPasswordErrorElem.classList.remove('hidden');
+            return false;
+        } else {
+            passwordErrorElem.classList.add('hidden');
+            confirmPasswordErrorElem.classList.add('hidden');
+            return true;
+        }
+    }
+    
+    // Add input event listeners to both password fields
+    passwordInput.addEventListener('input', checkPasswordsMatch);
+    confirmPasswordInput.addEventListener('input', checkPasswordsMatch);
+    
+    // Validate form before submission
+    registerForm.addEventListener('submit', function(event) {
+        if (!checkPasswordsMatch()) {
+            event.preventDefault();
         }
     });
 });

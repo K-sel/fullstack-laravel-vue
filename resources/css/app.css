@@ -31,13 +31,3 @@ html {
 #app {
     background-color: var(--background-color);
 }
-
-/* Pour les pages qui utilisent des conteneurs avec fond transparent */
-.bg-white {
-    @apply bg-black;
-}
-
-/* S'assurer que le fond noir est appliqué même avec des classes bg-* de Tailwind */
-.bg-gray-50, .bg-gray-100 {
-    @apply bg-black;
-}

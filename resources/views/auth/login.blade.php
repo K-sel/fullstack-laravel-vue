@@ -21,12 +21,6 @@
             </p>
         </div>
         
-        @if(session('error'))
-            <div class="bg-red-900 border border-red-800 text-red-100 px-4 py-3 rounded relative mt-4" role="alert">
-                <span class="block sm:inline">{{ session('error') }}</span>
-            </div>
-        @endif
-        
         <form class="mt-6 space-y-4" action="{{ route('login') }}" method="POST">
             @csrf
             
@@ -65,14 +59,24 @@
                 </div>
             </div>
 
-            <div class="flex items-center">
-                <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-white focus:ring-white border-zinc-700 rounded bg-zinc-900">
-                <label for="remember_me" class="ml-2 block text-sm text-gray-300">
-                    Remember me
-                </label>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-white focus:ring-white border-zinc-700 rounded bg-zinc-900">
+                    <label for="remember_me" class="ml-2 block text-sm text-gray-300">
+                        Remember me
+                    </label>
+                </div>
+                
+                @if(session('success'))
+                    <p class="text-green-500 text-sm">{{ session('success') }}</p>
+                @endif
             </div>
+            
+            @if(session('error'))
+                <p class="text-red-500 text-sm text-center">{{ session('error') }}</p>
+            @endif
 
-            <div class="pt-2">
+            <div class="pt-4">
                 <button type="submit" 
                         class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-zinc-900">
                     Log in

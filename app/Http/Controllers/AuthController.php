@@ -3,19 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthCreateUserValidation;
+use App\Http\Requests\AuthLoginValidation;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function findEmail($email)
-    {
-        User::findOrFail($email);
-    }
-
     public function createAccount(AuthCreateUserValidation $request)
     {
-        $user = User::create($request->validated());
-        return response()->json($user, 201);
+        User::create($request->validated());
+        return redirect()->route('login')->with(['success' => 'Account created successfully']);
+    }
+
+    public function login(AuthLoginValidation $request)
+    {
+        // Les informations de connexion
+        $credentials = $request->only('email', 'password');
+       
+        // Tenter de connecter l'utilisateur
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            // Régénérer la session pour prévenir la fixation de session
+            $request->session()->regenerate();
+            
+            // Rediriger vers la page d'accueil de l'application
+            return redirect()->route('spa');
+        }
+        
+        // En cas d'échec, rediriger vers la page de connexion avec une erreur
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->withInput($request->only('email'));
     }
 
     public function showRegister()
