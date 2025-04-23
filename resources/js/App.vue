@@ -7,8 +7,8 @@ import { RouterLink, RouterView } from "vue-router";
     <p><strong>Current route path:</strong> {{ $route.fullPath }}</p>
     <nav>
         <RouterLink to="/">Go to Home</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/register">Create Account</RouterLink>
+        <a href="/login">Login</a>
+        <a href="/register">Create an Account</a>
     </nav>
     <main>
         <RouterView />

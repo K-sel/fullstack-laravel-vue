@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthCreateUserValidation;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -21,8 +18,13 @@ class AuthController extends Controller
         return response()->json($user, 201);
     }
 
-    public function register()
+    public function showRegister()
     {
-        return view('index');
+        return view('auth.register');
+    }
+    public function showLogin()
+    {
+        return view('auth.login');
     }
 }
+    

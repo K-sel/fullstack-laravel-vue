@@ -9,7 +9,6 @@ export default defineConfig({
             input: ["resources/js/app.js"],
             refresh: true,
         }),
-        tailwindcss(),
         vue({
             template: {
                 transformAssetUrls: {
@@ -27,6 +26,6 @@ export default defineConfig({
                 },
             },
         }),
-        // tailwindcss(),
+         tailwindcss(),
     ],
 });
