@@ -1,19 +1,18 @@
 <script setup>
-  import { ref } from 'vue';
-  import TheHeader from '@/components/TheHeader.vue';
-  import PageExample from '@/pages/PageExample.vue';
-  const n = ref(1);
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <div>
-    <TheHeader />
+    <h1>Hello App!</h1>
+    <p><strong>Current route path:</strong> {{ $route.fullPath }}</p>
+    <nav>
+        <RouterLink to="/">Go to Home</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
+        <RouterLink to="/register">Create Account</RouterLink>
+    </nav>
     <main>
-      <PageExample />
+        <RouterView />
     </main>
-  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -17,4 +17,4 @@ const { data: data2, error: error2} = useFetchJson({url: 'test', method: 'DELETE
 
 <style scoped>
 
-</style>
+</style>  
