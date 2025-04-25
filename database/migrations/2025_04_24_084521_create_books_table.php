@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->string('sub_title', 255);
             $table->string('author', 255);
             $table->enum('reading_status', ['read', 'to-read', 'pending']);
+            $table->string('resume')->nullable();
+            $table->string('format')->nullable();
             $table->integer('number_of_pages');
             $table->date('release_date');
             $table->string('editor');

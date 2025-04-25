@@ -14,7 +14,7 @@ const props = defineProps({
     <div class="p-4 rounded-xl bg-card-bg flex gap-4 w-full transition-all duration-200 hover:shadow-md">
       <!-- Book Cover Image -->
       <div class="w-20 h-28 rounded-lg overflow-hidden flex-shrink-0">
-        <img :src="book.coverUrl" :alt="book.title" class="w-full h-full object-cover" />
+        <img :src="book.cover_image" :alt="book.title" class="w-full h-full object-cover" />
       </div>
       
       <!-- Book Details -->
