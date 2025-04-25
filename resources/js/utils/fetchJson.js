@@ -1,7 +1,9 @@
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const defaultHeaders = {
   'Content-Type': 'application/json',
   'X-Requested-With': 'XmlHttpRequest',
   'Accept': 'application/json',
+  'X-CSRF-TOKEN': csrfToken
 };
 
 let defaultBaseUrl = '';
@@ -46,7 +48,7 @@ export function fetchJson(options) {
     method = null,
     headers = {},
     timeout = 5000,
-    baseUrl = 'api/v1',
+    baseUrl = '',
   } = options;
 
   if (typeof url !== 'string') throw new Error('The URL must be a string.');

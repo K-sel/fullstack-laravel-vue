@@ -8,17 +8,17 @@
     <meta name="api-base-url" content="{{ url('api/v1') }}">
     @vite('resources/css/app.css')
     <title>Bookshelf</title>
-    @if(!Request::is('login') && !Request::is('register'))
+    @if (!Request::is('login') && !Request::is('register'))
         @vite(['resources/js/app.js'])
     @endif
 </head>
 
 <body>
-    @if(Request::is('login') || Request::is('register'))
-        @yield('auth')
-    @else
+    @auth
         <div id="app"></div>
-    @endif
+    @endauth
+    
+    @yield('auth')
 </body>
 
 </html>

@@ -12,11 +12,7 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-/* CSS styles are now in a global CSS file */
-  /* Using CSS variables from root to support dark and light mode */
-  .bg-bg-default {
-    background-color: var(--bg-default);
-  }
+
 
 /* Primitives */
 :root {
@@ -114,7 +110,7 @@
     --bg-default: var(--white);
     --bl---wh: #000000;
     --card-bg: var(--gray-100);
-    --nav-button-bg: var(--gray-50);
+    --nav-button-bg: var(--gray-200);
     --sub-text-lighter: #00000080;
     --text-default: var(--gray-900);
   }
@@ -128,7 +124,7 @@
     --bg-default: var(--black);
     --bl---wh: #ffffff;
     --card-bg: var(--gray-900);
-    --nav-button-bg: var(--gray-950);
+    --nav-button-bg: var(--gray-800);
     --sub-text-lighter: #ffffff80;
     --text-default: var(--gray-100);
   }

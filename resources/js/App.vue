@@ -12,6 +12,8 @@ import { RouterLink, RouterView } from "vue-router";
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
         sans-serif;
+
+    background-color: var(--bg-default);
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

@@ -32,7 +32,7 @@
             
             <div>
                 <label for="firstname" class="block text-sm font-medium text-gray-300">First name</label>
-                <input id="firstname" name="firstname" type="text" required value="{{ old('firstname') }}" 
+                <input id="firstname" name="firstname" type="text"  value="{{ old('firstname') }}" 
                        class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm" 
                        placeholder="First name">
                 @error('firstname')
@@ -42,7 +42,7 @@
             
             <div>
                 <label for="lastname" class="block text-sm font-medium text-gray-300">Last name</label>
-                <input id="lastname" name="lastname" type="text" required value="{{ old('lastname') }}" 
+                <input id="lastname" name="lastname" type="text"  value="{{ old('lastname') }}" 
                        class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm" 
                        placeholder="Last name">
                 @error('lastname')
@@ -52,7 +52,7 @@
             
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-300">Email address</label>
-                <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}" 
+                <input id="email" name="email" type="email" autocomplete="email"  value="{{ old('email') }}" 
                        class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm" 
                        placeholder="email@example.com">
                 @error('email')
@@ -63,7 +63,7 @@
             <div>
                 <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
                 <div class="relative mt-1">
-                    <input id="password" name="password" type="password" autocomplete="new-password" required 
+                    <input id="password" name="password" type="password" autocomplete="new-password"  
                            class="appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm" 
                            placeholder="••••••••">
                     <div id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer hover:text-white">
@@ -82,7 +82,7 @@
             <div>
                 <label for="password_confirmation" class="block text-sm font-medium text-gray-300">Confirm password</label>
                 <div class="relative mt-1">
-                    <input id="password_confirmation" name="password_confirmation" type="password" required 
+                    <input id="password_confirmation" name="password_confirmation" type="password"  
                            class="appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm" 
                            placeholder="••••••••">
                     <div id="toggleConfirmPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer hover:text-white">
@@ -97,7 +97,7 @@
 
             <div class="pt-4">
                 <button type="submit" 
-                        class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-zinc-900">
+                        class="submit w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-zinc-900">
                     Create account
                 </button>
             </div>
@@ -165,6 +165,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordErrorElem = document.getElementById('passwordError');
     const confirmPasswordErrorElem = document.getElementById('confirmPasswordError');
     const registerForm = document.getElementById('registerForm');
+    const submitButton = document.querySelector('button.submit');
+
+    submitButton.disable;
     
     // Function to check if passwords match
     function checkPasswordsMatch() {
@@ -184,6 +187,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             passwordErrorElem.classList.add('hidden');
             confirmPasswordErrorElem.classList.add('hidden');
+            submitButton.enable;
+
             return true;
         }
     }

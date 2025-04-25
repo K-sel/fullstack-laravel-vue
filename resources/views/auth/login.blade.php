@@ -26,7 +26,7 @@
             
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-300">Email address</label>
-                <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}" 
+                <input id="email" name="email" type="email" autocomplete="email" value="{{ old('email') }}" 
                        class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm" 
                        placeholder="email@example.com">
                 @error('email')
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="relative mt-1">
-                    <input id="password" name="password" type="password" autocomplete="current-password" required 
+                    <input id="password" name="password" type="password" autocomplete="current-password"  
                            class="appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm" 
                            placeholder="••••••••">
                     <div id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer hover:text-white">

@@ -22,6 +22,7 @@ class User extends Authenticatable
         'lastname',
         'email',
         'password',
+        'admin'
     ];
 
     /**
@@ -45,5 +46,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // DEFINITON DE LA RELATION x:N
+    public function books()
+    {
+        return $this->hasMany(Book::class); // Relation (1:)N
     }
 }
