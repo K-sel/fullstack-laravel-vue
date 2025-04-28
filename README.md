@@ -1,13 +1,8 @@
-Voici un **README** que résume clairement ton projet **Lightshelf**, en expliquant son **but**, **sa logique**, et **l'architecture générale**, **sans instructions d'installation** comme tu l'as demandé :
-
----
-
 # 📚 Lightshelf
 
 **Lightshelf** est une application minimaliste de gestion de bibliothèque personnelle développée en **Laravel** (backend) et **Vue.js** (frontend).  
 Ce projet a été conçu comme un **exercice d'apprentissage** pour mieux comprendre la création d'applications web modernes, notamment en construisant **un système d'authentification personnalisé** sans utiliser de packages comme Laravel Breeze ou Fortify.
 
----
 
 ## ✨ Objectif du projet
 
@@ -15,7 +10,6 @@ Ce projet a été conçu comme un **exercice d'apprentissage** pour mieux compre
 - Explorer et **implémenter manuellement** les mécanismes fondamentaux du web moderne : authentification, autorisation, gestion d'API RESTful.
 - Pratiquer la structuration d'une **Single Page Application (SPA)** avec **Vue.js** et **Laravel** comme API.
 
----
 
 ## 🛠️ Architecture générale
 
@@ -51,7 +45,6 @@ Ce projet a été conçu comme un **exercice d'apprentissage** pour mieux compre
   - Voir les détails d'un livre.
 - Gestion du **state utilisateur** pour limiter l'accès aux fonctionnalités selon la connexion.
 
----
 
 ## 🔐 Logique de sécurité
 
@@ -59,7 +52,6 @@ Ce projet a été conçu comme un **exercice d'apprentissage** pour mieux compre
 - **Validation stricte** des entrées utilisateur avec Laravel Form Request.
 - **Sécurisation des sessions** avec régénération de session après login (`$request->session()->regenerate()`).
 
----
 
 ## 📚 Modèle de données (simplifié)
 
@@ -94,7 +86,6 @@ Ce projet a été conçu comme un **exercice d'apprentissage** pour mieux compre
 | user_id         | foreign key (users.id) |
 | timestamps      | timestamps   |
 
----
 
 ## 🌟 Pourquoi Lightshelf est intéressant ?
 
