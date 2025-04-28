@@ -26,13 +26,13 @@ class NewBookRequest extends FormRequest
             'sub_title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'reading_status' => 'required|string|in:to-read,read,pending',
-            'resume' => 'nullable|string|max:2000',
-            'format' => 'nullable|string|max:100',
+            'resume' => 'required|string|max:2000',
+            'format' => 'required|string|max:100',
             'number_of_pages' => 'required|integer|min:1',
             'release_date' => 'required|date',
             'editor' => 'required|string|max:255',
             'isbn' => 'required|string|max:20|regex:/^[0-9-]+$/',
-            'cover_image' => 'nullable|url',
+            'cover_image' => 'required|url',
         ];
     }
 }

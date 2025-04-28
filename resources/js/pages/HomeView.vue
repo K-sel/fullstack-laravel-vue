@@ -1,9 +1,13 @@
 <script setup>
-import { ref, computed } from "vue";
-import { useFetchJson } from "../composables/useFetchJson.js";
+import { ref, computed, inject } from "vue";
 import BookCard from "../components/Elements/Base-BookCard.vue";
 import TheControls from "../components/TheControls.vue";
 import TheProfile from "../components/TheProfile.vue";
+
+// Injection avec valeur par défaut pour éviter undefined
+const data = inject('booksData');
+const errors = inject('booksErrors');
+const isLoading = inject('isBooksLoading');
 
 // Props et état local
 const profileImage = ref("/images/profile-image.png");
@@ -20,15 +24,10 @@ const tabs = [
     { id: "pending", name: "Pending" },
 ];
 
-const { data, error, isLoading } = useFetchJson({
-    url: `/api/v1/user/books`,
-    method: "GET",
-});
-
 // Computed pour filtrer les livres
 const filteredBooks = computed(() => {
-    console.log(data.value.books);
-    if (!data.value.books) return [];
+
+    if (!data.value?.books) return [];
 
     if (activeTab.value === "all") {
         return data.value.books;
@@ -43,6 +42,7 @@ const filteredBooks = computed(() => {
         );
     }
 });
+
 </script>
 
 <template>
@@ -59,6 +59,7 @@ const filteredBooks = computed(() => {
                 class="flex space-x-6 mb-6 overflow-x-auto justify-center"
                 style="scrollbar-width: none"
             >
+           
                 <button
                     v-for="tab in tabs"
                     :key="tab.id"
@@ -76,7 +77,7 @@ const filteredBooks = computed(() => {
 
             <!-- Container pour centrer les cartes avec max-width -->
             <div class="flex justify-center w-full">
-                <!-- Liste des livres avec largeur maximale -->
+                    <!-- Liste des livres avec largeur maximale -->
                 <div class="space-y-4 pb-6 w-full max-w-3xl">
                     <BookCard
                         v-for="book in filteredBooks"

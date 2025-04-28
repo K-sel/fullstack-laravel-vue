@@ -5,23 +5,30 @@ import { useFetchJson } from "../composables/useFetchJson.js";
 import TheControls from "../components/TheControls.vue";
 import TheAddBookTitle from "../components/TheAddBookTitle.vue";
 
-// Form data
-const title = ref("");
-const sub_title = ref("");
-const author = ref("");
+// État pour suivre si le livre a été ajouté avec succès
+const bookAdded = ref(false);
+// État pour contrôler l'animation de fade-in du message de succès
+const showSuccessMessage = ref(false);
+
+// Form data with default values
+const title = ref("Le Comte de Monte-Cristo");
+const sub_title = ref("Roman d'aventure");
+const author = ref("Alexandre Dumas");
 const reading_status = ref("to-read");
-const resume = ref("");
-const format = ref("");
-const number_of_pages = ref(0);
-const release_date = ref("");
-const editor = ref("");
-const isbn = ref("");
-const cover_image = ref("");
+const resume = ref("Edmond Dantès, injustement emprisonné au château d'If, s'évade et entreprend sa vengeance contre ceux qui l'ont trahi, après avoir découvert un trésor sur l'île de Monte-Cristo.");
+const format = ref("Broché");
+const number_of_pages = ref(1024);
+const release_date = ref("1844-08-28");
+const editor = ref("Gallimard");
+const isbn = ref("978-2-07-040692-1");
+const cover_image = ref("https://images.bookshop.org/covers/9782070406920.jpg");
 
 // Form errors
-const errors = ref({});
+const responseData = ref(null);
+const responseError = ref(null);
+const isLoading = ref(false);
 const formSubmitted = ref(false);
-const isSubmitting = ref(false);
+const errors = ref({});
 
 onMounted(() => {
     // Check if dark mode is already enabled (either by system preference or user choice)
@@ -34,7 +41,6 @@ onMounted(() => {
 const submitForm = async (e) => {
     e.preventDefault();
     formSubmitted.value = true;
-    isSubmitting.value = true;
     errors.value = {};
 
     const body = {
@@ -52,60 +58,76 @@ const submitForm = async (e) => {
     };
 
     try {
-        const { data, error, isLoading } = await useFetchJson({
+        const { abort } = useFetchJson(responseData, responseError, isLoading, {
             url: "/api/v1/new",
             method: "POST",
             data: body,
         });
-
-        watchEffect(() => {
-            if (data.value) {
-                // Handle success
-                console.log(data.value);
-                // Redirect or show success message
-            }
-
-            if (error.value) {
-                // Handle validation errors
-                if (
-                    error.value.response &&
-                    error.value.response.data &&
-                    error.value.response.data.errors
-                ) {
-                    errors.value = error.value.response.data.errors;
-                } else {
-                    // Handle other errors
-                    console.error("Error submitting form:", error.value);
-                }
-            }
-
-            isSubmitting.value = false;
-        });
     } catch (err) {
         console.error("Error during form submission:", err);
-        isSubmitting.value = false;
     }
 };
 
-// Helper function to check if a field has errors
-const hasError = (field) => {
-    return errors.value && errors.value[field];
-};
+watchEffect(() => {
+    if (responseData.value) {
+        console.log(responseData.value);
+        // Traitement en cas de succès
+        bookAdded.value = true;
+        
+        // Déclencher l'animation du message de succès après une courte période
+        setTimeout(() => {
+            showSuccessMessage.value = true;
+        }, 100);
+        
+        // Rediriger vers la page d'accueil après 3 secondes
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 2000);
+    }
 
-// Helper function to get error message
-const getErrorMessage = (field) => {
-    return hasError(field) ? errors.value[field][0] : "";
+    if (
+        responseError.value &&
+        responseError.value.data &&
+        responseError.value.data.errors
+    ) {
+        console.log(responseError.value);
+        errors.value = extractSimpleObject(responseError.value.data.errors);
+        console.log(errors.value);
+    }
+});
+
+// Supposons que votre Proxy Object est stocké dans une variable appelée proxyObject
+const extractSimpleObject = (proxyObject) => {
+    const result = {};
+
+    // Si c'est un Proxy avec des arrays comme valeurs
+    if (proxyObject) {
+        Object.keys(proxyObject).forEach((key) => {
+            // Prendre le premier élément de chaque array
+            result[key] = proxyObject[key][0];
+        });
+    }
+    return result;
 };
 </script>
 
 <template>
     <header class="px-4 py-6 bg-bg-default">
         <TheControls></TheControls>
-        <TheAddBookTitle></TheAddBookTitle>
+        <TheAddBookTitle v-if="!bookAdded"></TheAddBookTitle>
     </header>
 
+    <!-- Message de succès animé -->
+    <div v-if="bookAdded" class="success-container" :class="{ 'show': showSuccessMessage }">
+        <div class="success-message">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="success-icon lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
+            <h2>Livre ajouté avec succès!</h2>
+            <p>Vous allez être redirigé sur l'écran d'accueil...</p>
+        </div>
+    </div>
+
     <!-- Main content -->
-    <div class="max-w-2xl mx-auto px-4 pb-12">
+    <div v-if="!bookAdded" class="max-w-2xl mx-auto px-4 pb-12 fade-out" :class="{ 'hide': bookAdded }">
         <form @submit.prevent="submitForm" class="space-y-4">
             <!-- Title -->
             <div class="form-group">
@@ -123,10 +145,10 @@ const getErrorMessage = (field) => {
                     maxlength="255"
                     placeholder="Titre du livre"
                 />
-                <p v-if="hasError('title')" class="text-red-400 text-xs mt-1">
-                    {{ getErrorMessage("title") }}
-                </p>
             </div>
+            <p v-if="errors?.title" class="text-red-400 text-xs mt-1">
+                {{ errors?.title }}
+            </p>
 
             <!-- Subtitle -->
             <div class="form-group">
@@ -144,13 +166,10 @@ const getErrorMessage = (field) => {
                     maxlength="255"
                     placeholder="Sous-titre du livre"
                 />
-                <p
-                    v-if="hasError('sub_title')"
-                    class="text-red-400 text-xs mt-1"
-                >
-                    {{ getErrorMessage("sub_title") }}
-                </p>
             </div>
+            <p v-if="errors?.sub_title" class="text-red-400 text-xs mt-1">
+                {{ errors?.sub_title }}
+            </p>
 
             <!-- Author -->
             <div class="form-group">
@@ -169,10 +188,10 @@ const getErrorMessage = (field) => {
                     maxlength="255"
                     placeholder="Nom de l'auteur"
                 />
-                <p v-if="hasError('author')" class="text-red-400 text-xs mt-1">
-                    {{ getErrorMessage("author") }}
-                </p>
             </div>
+            <p v-if="errors?.author" class="text-red-400 text-xs mt-1">
+                {{ errors?.author }}
+            </p>
 
             <!-- Reading Status -->
             <div class="form-group">
@@ -192,13 +211,10 @@ const getErrorMessage = (field) => {
                     <option value="read">Lu</option>
                     <option value="pending">En cours</option>
                 </select>
-                <p
-                    v-if="hasError('reading_status')"
-                    class="text-red-400 text-xs mt-1"
-                >
-                    {{ getErrorMessage("reading_status") }}
-                </p>
             </div>
+            <p v-if="errors?.reading_status" class="text-red-400 text-xs mt-1">
+                {{ errors?.reading_status }}
+            </p>
 
             <!-- Resume -->
             <div class="form-group">
@@ -216,10 +232,10 @@ const getErrorMessage = (field) => {
                     maxlength="2000"
                     placeholder="Résumé du livre"
                 ></textarea>
-                <p v-if="hasError('resume')" class="text-red-400 text-xs mt-1">
-                    {{ getErrorMessage("resume") }}
-                </p>
             </div>
+            <p v-if="errors?.resume" class="text-red-400 text-xs mt-1">
+                {{ errors?.resume }}
+            </p>
 
             <!-- Format -->
             <div class="form-group">
@@ -237,10 +253,10 @@ const getErrorMessage = (field) => {
                     maxlength="100"
                     placeholder="Poche, Broché, etc."
                 />
-                <p v-if="hasError('format')" class="text-red-400 text-xs mt-1">
-                    {{ getErrorMessage("format") }}
-                </p>
             </div>
+            <p v-if="errors?.format" class="text-red-400 text-xs mt-1">
+                {{ errors?.format }}
+            </p>
 
             <!-- Number of Pages -->
             <div class="form-group">
@@ -256,15 +272,13 @@ const getErrorMessage = (field) => {
                     id="number_of_pages"
                     class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     required
+                    min="0"
                     placeholder="250"
                 />
-                <p
-                    v-if="hasError('number_of_pages')"
-                    class="text-red-400 text-xs mt-1"
-                >
-                    {{ getErrorMessage("number_of_pages") }}
-                </p>
             </div>
+            <p v-if="errors?.number_of_pages" class="text-red-400 text-xs mt-1">
+                {{ errors?.number_of_pages }}
+            </p>
 
             <!-- Release Date -->
             <div class="form-group">
@@ -281,13 +295,10 @@ const getErrorMessage = (field) => {
                     class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     required
                 />
-                <p
-                    v-if="hasError('release_date')"
-                    class="text-red-400 text-xs mt-1"
-                >
-                    {{ getErrorMessage("release_date") }}
-                </p>
             </div>
+            <p v-if="errors?.release_date" class="text-red-400 text-xs mt-1">
+                {{ errors?.release_date }}
+            </p>
 
             <!-- Editor -->
             <div class="form-group">
@@ -302,14 +313,13 @@ const getErrorMessage = (field) => {
                     name="editor"
                     id="editor"
                     class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
-                    required
                     maxlength="255"
                     placeholder="Nom de l'éditeur"
                 />
-                <p v-if="hasError('editor')" class="text-red-400 text-xs mt-1">
-                    {{ getErrorMessage("editor") }}
-                </p>
             </div>
+            <p v-if="errors?.editor" class="text-red-400 text-xs mt-1">
+                {{ errors?.editor }}
+            </p>
 
             <!-- ISBN -->
             <div class="form-group">
@@ -324,15 +334,13 @@ const getErrorMessage = (field) => {
                     name="isbn"
                     id="isbn"
                     class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
-                    required
                     maxlength="20"
                     placeholder="978-2-1234-5680-3"
-                    pattern="[0-9-]+"
                 />
-                <p v-if="hasError('isbn')" class="text-red-400 text-xs mt-1">
-                    {{ getErrorMessage("isbn") }}
-                </p>
             </div>
+            <p v-if="errors?.isbn" class="text-red-400 text-xs mt-1">
+                {{ errors?.isbn }}
+            </p>
 
             <!-- Cover Image URL -->
             <div class="form-group">
@@ -349,24 +357,20 @@ const getErrorMessage = (field) => {
                     class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     placeholder="https://example.com/book-cover.jpg"
                 />
-                <p
-                    v-if="hasError('cover_image')"
-                    class="text-red-400 text-xs mt-1"
-                >
-                    {{ getErrorMessage("cover_image") }}
-                </p>
             </div>
+            <p v-if="errors?.cover_image" class="text-red-400 text-xs mt-1">
+                {{ errors?.cover_image }}
+            </p>
 
-            <!-- Submit button -->
             <!-- Submit button -->
             <div class="pt-4">
                 <button
                     type="submit"
-                    :disabled="isSubmitting"
                     class="w-full flex justify-center py-2 px-4 border border-text-default text-sm font-medium rounded-md bg-bg-default text-text-default hover:bg-text-default hover:text-bg-default transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-text-default focus:ring-offset-bg-card-bg"
+                    :disabled="isLoading"
                 >
-                    <span v-if="isSubmitting">Traitement en cours...</span>
-                    <span v-else>Enregistrer le livre</span>
+                    <span v-if="!isLoading">Enregistrer le livre</span>
+                    <span v-else>Enregistrement en cours...</span>
                 </button>
             </div>
         </form>
@@ -408,5 +412,68 @@ const getErrorMessage = (field) => {
 button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+}
+
+/* Animation pour la disparition du contenu */
+.fade-out {
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.fade-out.hide {
+    opacity: 0;
+}
+
+/* Styles pour le message de succès */
+.success-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.success-container.show {
+    opacity: 1;
+}
+
+.success-message {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(20px);
+    transition: transform 0.5s ease-out;
+    max-width: 90%;
+    color: var(--text-default);
+}
+
+.success-container.show .success-message {
+    transform: translateY(0);
+}
+
+.success-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1rem;
+    color: #10B981; /* Couleur verte */
+}
+
+.success-message h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.success-message p {
+    font-size: 1rem;
+    opacity: 0.8;
 }
 </style>

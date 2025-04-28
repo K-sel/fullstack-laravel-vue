@@ -1,10 +1,13 @@
 <script setup>
-import { watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import { useFetchJson } from "../../composables/useFetchJson.js";
 
-// Fonction logout
+const data = ref(null);
+const error = ref(null);
+const isLoading = ref(false);
+
 const logout = () => {
-    const { error, data, isLoading } = useFetchJson({
+    useFetchJson(data, error, isLoading, {
         url: "/logout",
         method: "DELETE",
     });
@@ -21,13 +24,13 @@ const logout = () => {
 <template>
     <form @submit.prevent="logout">
         <button
-            class="logout px-4 py-1.5 text-sm font-medium rounded-md text-text-default bg-nav-button-bg transition-colors duration-200 flex items-center gap-2"
+            class="logout flex items-center justify-center rounded-md text-text-default transition-colors duration-200"
             aria-label="Se déconnecter"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -35,13 +38,13 @@ const logout = () => {
                 stroke-linecap="round"
                 stroke-linejoin="round"
             >
-                <path
-                    d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
-                ></path>
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
                 <line x1="21" y1="12" x2="9" y2="12"></line>
             </svg>
-            Déconnexion
+            <span class="ml-2 text-sm font-medium hidden md:inline"
+                >Déconnexion</span
+            >
         </button>
     </form>
 </template>
@@ -53,6 +56,24 @@ const logout = () => {
 
 .text-text-default {
     color: var(--text-default);
+}
+
+/* Style pour mobile (icône seulement) */
+button.logout {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    background-color: var(--nav-button-bg);
+}
+
+/* Style pour desktop (avec texte) */
+@media (min-width: 768px) {
+    button.logout {
+        width: auto;
+        height: auto;
+        padding: 0.375rem 1rem;
+        gap: 0.5rem;
+    }
 }
 
 button.logout:hover {

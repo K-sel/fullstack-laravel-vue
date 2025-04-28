@@ -3,9 +3,6 @@
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use App\Models\Book;
-use Illuminate\Support\Facades\Auth;
 
 // Auth routes
 Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister')->middleware('guest');
@@ -19,6 +16,8 @@ Route::prefix('api/v1')->group(function () {
   Route::get('/users/all', [ApiController::class, 'fetchAllUsers']);
   Route::get('/books/all', [ApiController::class, 'fetchAllBooks']);
   Route::get('/user/books', [ApiController::class, 'fetchUserBooks']);
+  Route::get('/user/book/{id}', [ApiController::class, 'fetchBookById']);
+  Route::delete('/user/book/{id}', [ApiController::class, 'deleteBookById']);
   Route::post('/new', [ApiController::class, 'createNewBook']);
 });
 

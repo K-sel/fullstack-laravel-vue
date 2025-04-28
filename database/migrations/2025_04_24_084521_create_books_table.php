@@ -15,17 +15,17 @@ return new class extends Migration {
     {
         Schema::create('books', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cover_image')->nullable();
-            $table->string('title', 255)->nullable();
+            $table->string('title', 255);
             $table->string('sub_title', 255);
             $table->string('author', 255);
             $table->enum('reading_status', ['read', 'to-read', 'pending']);
-            $table->string('resume')->nullable();
-            $table->string('format')->nullable();
+            $table->string('resume');
+            $table->string('format');
             $table->integer('number_of_pages');
             $table->date('release_date');
             $table->string('editor');
             $table->string('isbn');
+            $table->string('cover_image');
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table
