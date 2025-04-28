@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
     <div class="action-button">
         <RouterLink
-            :to="'/edit/' + bookId"
+            :to="'/update/' + bookId"
             class="flex flex-col items-center w-full"
         >
             <svg

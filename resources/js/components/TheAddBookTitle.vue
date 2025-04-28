@@ -20,7 +20,7 @@
                 ></path>
             </svg>
         </div>
-        <h2 class="text-3xl font-bold text-text-default">Edit/add book</h2>
+        <h2 class="text-3xl font-bold text-text-default"><slot></slot></h2>
         <p class="mt-2 text-sm text-sub-text-lighter">
             Build your own Bookshelf
         </p>

@@ -16,21 +16,12 @@ class UsersTableSeeder extends Seeder
 	public function run(): void
 
 	{
-        $faker = Faker::create();
-        
-
-       
-		for ($i = 1; $i <= 2; $i++) {
-            $fullname = $faker->name();
-            $firstname = explode(' ', $fullname)[0];
-            $lastname = explode(' ', $fullname)[1];
-			User::create([
-				'firstname' => $firstname,
-                'lastname' => $lastname,
-				'email' =>  "$firstname.$lastname@seed.com",
-				'password' => 'password' . $i,
-				'admin' => rand(0, 1),
-			]);
-		}
+		User::create([
+			'firstname' => 'john',
+			'lastname' => 'doe',
+			'email' =>  "johndoe@seed.com",
+			'password' => 'password1',
+			'admin' => 1,
+		]);
 	}
 }

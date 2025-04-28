@@ -10,6 +10,14 @@ Route::post('/register', [AuthController::class, 'createAccount'])->name('create
 Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::delete('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('/edit-password', [App\Http\Controllers\PasswordController::class, 'edit'])
+  ->name('password.edit')
+  ->middleware('auth');
+
+// Route pour traiter la modification du mot de passe
+Route::post('/password/update', [App\Http\Controllers\PasswordController::class, 'update'])
+  ->name('password.update')
+  ->middleware('auth');
 
 // Api routes
 Route::prefix('api/v1')->group(function () {
@@ -18,7 +26,8 @@ Route::prefix('api/v1')->group(function () {
   Route::get('/user/books', [ApiController::class, 'fetchUserBooks']);
   Route::get('/user/book/{id}', [ApiController::class, 'fetchBookById']);
   Route::delete('/user/book/{id}', [ApiController::class, 'deleteBookById']);
-  Route::post('/new', [ApiController::class, 'createNewBook']);
+  Route::post('/create', [ApiController::class, 'createNewBook']);
+  Route::patch('/update/{id}', [ApiController::class, 'updateBook']);
 });
 
 // Vue routes

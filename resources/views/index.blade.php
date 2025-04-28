@@ -13,11 +13,14 @@
     @endif
 </head>
 
+
 <body>
     @auth
-        <div id="app"></div>
+        @if (Request::path() !== 'edit-password')
+            <div id="app"></div>
+        @endif
     @endauth
-    
+
     @yield('auth')
 </body>
 

@@ -1,5 +1,5 @@
 <template>
-    <RouterLink to="/new">
+    <RouterLink to="/create">
         <button
             class="new w-8 h-8 flex items-center justify-center rounded-full bg-nav-button-bg"
         >

@@ -52,6 +52,43 @@ class ApiController extends Controller
         }
     }
 
+    public function updateBook(NewBookRequest $request, $id)
+{
+    // S'assurer que l'utilisateur est bien authentifié
+    if (!Auth::check()) {
+        return response()->json(['error' => 'Utilisateur non authentifié'], 401);
+    }
+
+    try {
+        $book = Book::findOrFail($id);
+        
+        if ($book->user_id != Auth::id()) {
+            return response()->json(['error' => 'Non autorisé'], 403);
+        }
+        
+        $validatedData = $request->validated();
+        
+        $oldBook = $book->toArray();
+        
+        $book->fill($request->only(array_keys($validatedData)));
+        
+        // Sauvegarder les modifications
+        $book->save();
+        
+        // Retourner une réponse avec l'ancien et le nouveau livre
+        return response()->json([
+            'OLD' => $oldBook,
+            'NEW' => $book
+        ], 200); // 200 OK pour une mise à jour, pas 201
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'ERREUR' => $e->getMessage(),
+            'RECEIVED REQUEST' => $request->validated()
+        ], 500);
+    }
+}
+
     public function fetchBookById($id)
     {
         return response()->json(Book::findOrFail($id));
@@ -61,13 +98,16 @@ class ApiController extends Controller
     {
         $book = Book::findOrFail($id);
 
+        if (!Auth::check()) {
+            return response()->json(['error' => 'Utilisateur non authentifié'], 401);
+        }
 
         try {
-            if (Auth::check() && $book->user_id === Auth::user()->id) {
+            if ($book->user_id === Auth::user()->id) {
                 $book->delete();
                 return response()->noContent();
             } else {
-                return response()->json(['error' => "Vous n'avez pas les droits sur cette collection"]);
+                return response()->json(['error' => 'Non autorisé'], 403);
             }
         } catch (\Exception $e) {
             return response()->json([

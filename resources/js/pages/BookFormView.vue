@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watchEffect } from "vue";
+import { ref, onMounted, watchEffect, inject, computed } from "vue";
 import { checkDarkMode, applyTheme, isDarkMode } from "../utils/store.js";
 import { useFetchJson } from "../composables/useFetchJson.js";
 import TheControls from "../components/TheControls.vue";
@@ -10,18 +10,75 @@ const bookAdded = ref(false);
 // État pour contrôler l'animation de fade-in du message de succès
 const showSuccessMessage = ref(false);
 
-// Form data with default values
-const title = ref("Le Comte de Monte-Cristo");
-const sub_title = ref("Roman d'aventure");
-const author = ref("Alexandre Dumas");
-const reading_status = ref("to-read");
-const resume = ref("Edmond Dantès, injustement emprisonné au château d'If, s'évade et entreprend sa vengeance contre ceux qui l'ont trahi, après avoir découvert un trésor sur l'île de Monte-Cristo.");
-const format = ref("Broché");
-const number_of_pages = ref(1024);
-const release_date = ref("1844-08-28");
-const editor = ref("Gallimard");
-const isbn = ref("978-2-07-040692-1");
-const cover_image = ref("https://images.bookshop.org/covers/9782070406920.jpg");
+// Setup des données et récupération du livre a afficher
+const data = inject("booksData", ref({ books: [] }));
+
+const typeOfForm =
+    window.location.pathname.split("/")[1] === "update" ? "update" : "create";
+const formTitle =
+    typeOfForm === "update" ? "Modifier le livre" : "Ajouter un livre";
+const submitTitle =
+    typeOfForm === "update"
+        ? "Enregistrer les modifications"
+        : "Créer le livre";
+
+const bookId = window.location.pathname.split("/").pop();
+
+const actualBook = computed(() => {
+    return data.value?.books.find((book) => book.id == bookId);
+});
+
+const bookNotFound = computed(() => {
+    return data.value?.books.find((book) => book.id == bookId) === undefined;
+});
+
+// Form data with default values (échantillon pour Monte-Cristo)
+const defaultValues = {
+    title: "Le Comte de Monte-Cristo",
+    sub_title: "Roman d'aventure",
+    author: "Alexandre Dumas",
+    reading_status: "to-read",
+    resume: "Le Comte de Monte-Cristo est un roman d'Alexandre Dumas, écrit avec la collaboration d'Auguste Maquet et dont la publication commence pendant l'été 1844. Il est partiellement inspiré du récit d'un fait divers, « Le Diamant et la Vengeance » (voir Pierre Picaud), publié en 1838 dans les Mémoires tirés des archives de la police (tome V, chapitre LXXIV), mémoires apocryphes rédigés en large partie par l'écrivain Étienne-Léon de Lamothe-Langon à partir des notes de Jacques Peuchet, archiviste de la préfecture de police. Cet ouvrage est, avec Les Trois Mousquetaires, l'une des œuvres les plus connues de l'écrivain tant en France qu'à l'étranger. Il a d'abord été publié en feuilleton dans le Journal des débats du 28 août au 19 octobre 1844 (1re partie), du 31 octobre au 26 novembre 1844 (2e partie), puis finalement du 20 juin 1845 au 15 janvier 1846 (3e partie).",
+    format: "Broché",
+    number_of_pages: 1024,
+    release_date: "1844-08-28",
+    editor: "Gallimard",
+    isbn: "978-2-07-040692-1",
+    cover_image:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Louis_Fran%C3%A7ais-Dant%C3%A8s_sur_son_rocher.jpg/1200px-Louis_Fran%C3%A7ais-Dant%C3%A8s_sur_son_rocher.jpg",
+};
+
+// Initialisation des refs
+const title = ref(defaultValues.title);
+const sub_title = ref(defaultValues.sub_title);
+const author = ref(defaultValues.author);
+const reading_status = ref(defaultValues.reading_status);
+const resume = ref(defaultValues.resume);
+const format = ref(defaultValues.format);
+const number_of_pages = ref(defaultValues.number_of_pages);
+const release_date = ref(defaultValues.release_date);
+const editor = ref(defaultValues.editor);
+const isbn = ref(defaultValues.isbn);
+const cover_image = ref(defaultValues.cover_image);
+
+// Si en mode édition et que le livre existe, remplacer les valeurs par défaut
+watchEffect(() => {
+    if (typeOfForm === "update" && !bookNotFound.value && actualBook.value) {
+        console.log("Livre à modifier", actualBook.value);
+
+        title.value = actualBook.value.title;
+        sub_title.value = actualBook.value.sub_title;
+        author.value = actualBook.value.author;
+        reading_status.value = actualBook.value.reading_status;
+        resume.value = actualBook.value.resume;
+        format.value = actualBook.value.format;
+        number_of_pages.value = actualBook.value.number_of_pages;
+        release_date.value = actualBook.value.release_date?.split(" ")[0]; // Pour enlever la partie heure si présente
+        editor.value = actualBook.value.editor;
+        isbn.value = actualBook.value.isbn;
+        cover_image.value = actualBook.value.cover_image;
+    }
+});
 
 // Form errors
 const responseData = ref(null);
@@ -43,6 +100,9 @@ const submitForm = async (e) => {
     formSubmitted.value = true;
     errors.value = {};
 
+    const url =
+        typeOfForm === "update" ? `/api/v1/update/${bookId}` : "/api/v1/create";
+    const method = typeOfForm === "update" ? "PATCH" : "POST";
     const body = {
         title: title.value,
         sub_title: sub_title.value,
@@ -59,8 +119,8 @@ const submitForm = async (e) => {
 
     try {
         const { abort } = useFetchJson(responseData, responseError, isLoading, {
-            url: "/api/v1/new",
-            method: "POST",
+            url: url,
+            method: method,
             data: body,
         });
     } catch (err) {
@@ -69,16 +129,17 @@ const submitForm = async (e) => {
 };
 
 watchEffect(() => {
+    console.log(responseError.value);
     if (responseData.value) {
         console.log(responseData.value);
         // Traitement en cas de succès
         bookAdded.value = true;
-        
+
         // Déclencher l'animation du message de succès après une courte période
         setTimeout(() => {
             showSuccessMessage.value = true;
         }, 100);
-        
+
         // Rediriger vers la page d'accueil après 3 secondes
         setTimeout(() => {
             window.location.href = "/";
@@ -114,20 +175,48 @@ const extractSimpleObject = (proxyObject) => {
 <template>
     <header class="px-4 py-6 bg-bg-default">
         <TheControls></TheControls>
-        <TheAddBookTitle v-if="!bookAdded"></TheAddBookTitle>
+        <TheAddBookTitle v-if="!bookAdded">{{ formTitle }}</TheAddBookTitle>
     </header>
 
     <!-- Message de succès animé -->
-    <div v-if="bookAdded" class="success-container" :class="{ 'show': showSuccessMessage }">
+    <div
+        v-if="bookAdded"
+        class="success-container"
+        :class="{ show: showSuccessMessage }"
+    >
         <div class="success-message">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="success-icon lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
-            <h2>Livre ajouté avec succès!</h2>
-            <p>Vous allez être redirigé sur l'écran d'accueil...</p>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="success-icon lucide lucide-check-icon lucide-check"
+            >
+                <path d="M20 6 9 17l-5-5" />
+            </svg>
+            <div>
+                <h2 v-if="typeOfForm === 'update'">
+                    Livre modifié avec succès!
+                </h2>
+                <h2 v-if="typeOfForm === 'create'">
+                    Livre ajouté avec succès!
+                </h2>
+                <p>Vous allez être redirigé sur l'écran d'accueil...</p>
+            </div>
         </div>
     </div>
 
     <!-- Main content -->
-    <div v-if="!bookAdded" class="max-w-2xl mx-auto px-4 pb-12 fade-out" :class="{ 'hide': bookAdded }">
+    <div
+        v-if="!bookAdded"
+        class="max-w-2xl mx-auto px-4 pb-12 fade-out"
+        :class="{ hide: bookAdded }"
+    >
         <form @submit.prevent="submitForm" class="space-y-4">
             <!-- Title -->
             <div class="form-group">
@@ -369,7 +458,7 @@ const extractSimpleObject = (proxyObject) => {
                     class="w-full flex justify-center py-2 px-4 border border-text-default text-sm font-medium rounded-md bg-bg-default text-text-default hover:bg-text-default hover:text-bg-default transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-text-default focus:ring-offset-bg-card-bg"
                     :disabled="isLoading"
                 >
-                    <span v-if="!isLoading">Enregistrer le livre</span>
+                    <span v-if="!isLoading">{{ submitTitle }}</span>
                     <span v-else>Enregistrement en cours...</span>
                 </button>
             </div>
@@ -448,7 +537,8 @@ button:disabled {
     padding: 2rem;
     border-radius: 0.5rem;
     text-align: center;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
     transform: translateY(20px);
     transition: transform 0.5s ease-out;
     max-width: 90%;
@@ -463,7 +553,7 @@ button:disabled {
     width: 4rem;
     height: 4rem;
     margin: 0 auto 1rem;
-    color: #10B981; /* Couleur verte */
+    color: #10b981; /* Couleur verte */
 }
 
 .success-message h2 {

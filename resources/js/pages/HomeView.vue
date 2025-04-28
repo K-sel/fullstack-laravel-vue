@@ -5,9 +5,9 @@ import TheControls from "../components/TheControls.vue";
 import TheProfile from "../components/TheProfile.vue";
 
 // Injection avec valeur par défaut pour éviter undefined
-const data = inject('booksData');
-const errors = inject('booksErrors');
-const isLoading = inject('isBooksLoading');
+const data = inject("booksData");
+const errors = inject("booksErrors");
+const isLoading = inject("isBooksLoading");
 
 // Props et état local
 const profileImage = ref("/images/profile-image.png");
@@ -26,11 +26,13 @@ const tabs = [
 
 // Computed pour filtrer les livres
 const filteredBooks = computed(() => {
-
     if (!data.value?.books) return [];
 
     if (activeTab.value === "all") {
-        return data.value.books;
+        console.log(data.value.books);
+        return data.value.books.sort(
+            (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
     } else {
         const statusMap = {
             read: "read",
@@ -42,7 +44,6 @@ const filteredBooks = computed(() => {
         );
     }
 });
-
 </script>
 
 <template>
@@ -59,7 +60,6 @@ const filteredBooks = computed(() => {
                 class="flex space-x-6 mb-6 overflow-x-auto justify-center"
                 style="scrollbar-width: none"
             >
-           
                 <button
                     v-for="tab in tabs"
                     :key="tab.id"
@@ -77,7 +77,7 @@ const filteredBooks = computed(() => {
 
             <!-- Container pour centrer les cartes avec max-width -->
             <div class="flex justify-center w-full">
-                    <!-- Liste des livres avec largeur maximale -->
+                <!-- Liste des livres avec largeur maximale -->
                 <div class="space-y-4 pb-6 w-full max-w-3xl">
                     <BookCard
                         v-for="book in filteredBooks"
