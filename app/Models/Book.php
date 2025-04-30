@@ -21,7 +21,16 @@ class Book extends Model
         'editor',
         'isbn',
         'cover_image',
+        'cover_image_name',
         'user_id'
+    ];
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'cover_image',
     ];
 
     public function user()

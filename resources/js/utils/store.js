@@ -1,6 +1,4 @@
 import { ref } from "vue";
-import { fetchJson } from "./fetchJson.js";
-import { useFetchJson } from "../composables/useFetchJson.js";
 
 export const checkDarkMode = () => {
     // Check saved preference

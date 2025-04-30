@@ -1,21 +1,28 @@
 <script setup>
 import { RouterView } from "vue-router";
 import { useFetchJson } from "./composables/useFetchJson.js";
-import { onMounted, ref, provide } from "vue";
+import { onMounted, ref, provide, watchEffect } from "vue";
 
 const booksData = ref({ books: [] });
 const booksErrors = ref(null);
 const isBooksLoading = ref(false);
 
+addEventListener("storage", (event) => {console.log(event.key);});
+onstorage = (event) => {console.log(event.key);};
+
 provide("booksData", booksData);
 provide("booksErrors", booksErrors);
 provide("isBooksLoading", isBooksLoading);
 
-onMounted(async () => {
+onMounted(() => {
     const { abort } = useFetchJson(booksData, booksErrors, isBooksLoading, {
         url: `/api/v1/user/books`,
         method: "GET",
     });
+});
+
+watchEffect(() => {
+    localStorage.setItem("booksData", JSON.stringify(booksData.value));
 });
 </script>
 

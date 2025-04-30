@@ -55,9 +55,9 @@
             </div>
             
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-300">New password</label>
+                <label for="new_password" class="block text-sm font-medium text-gray-300">New password</label>
                 <div class="relative mt-1">
-                    <input id="password" name="password" type="password" autocomplete="new-password"  
+                    <input id="new_password" name="new_password" type="password" autocomplete="new-password"  
                            class="appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm" 
                            placeholder="••••••••">
                     <div id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer hover:text-white">
@@ -66,7 +66,7 @@
                             <line x1="1" y1="1" x2="23" y2="23"></line>
                         </svg>
                     </div>
-                    @error('password')
+                    @error('new_password')
                         <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                     @enderror
                     <p id="passwordError" class="text-red-400 text-xs mt-1 hidden">Passwords do not match</p>
@@ -74,9 +74,9 @@
             </div>
             
             <div>
-                <label for="password_confirmation" class="block text-sm font-medium text-gray-300">Confirm new password</label>
+                <label for="new_password_confirmed" class="block text-sm font-medium text-gray-300">Confirm new password</label>
                 <div class="relative mt-1">
-                    <input id="password_confirmation" name="password_confirmation" type="password"  
+                    <input id="new_password_confirmed" name="new_password_confirmed" type="password"  
                            class="appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm" 
                            placeholder="••••••••">
                     <div id="toggleConfirmPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer hover:text-white">
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Toggle for new password
     const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
+    const passwordInput = document.getElementById('new_password');
     const eyeIcon = document.getElementById('eyeIcon');
     
     togglePassword.addEventListener('click', function() {
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Toggle for confirmation password
     const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-    const confirmPasswordInput = document.getElementById('password_confirmation');
+    const confirmPasswordInput = document.getElementById('new_password_confirmed');
     const eyeIconConfirm = document.getElementById('eyeIconConfirm');
     
     toggleConfirmPassword.addEventListener('click', function() {

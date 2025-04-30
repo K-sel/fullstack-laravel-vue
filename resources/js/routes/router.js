@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-
 import HomeView from "../pages/HomeView.vue";
 import BookFormView from "../pages/BookFormView.vue";
 import BookDetailsView from "../pages/BookDetailsView.vue";
@@ -9,9 +8,9 @@ import SettingsView from "../pages/SettingsView.vue";
 
 const routes = [
     { path: "/", component: HomeView },
-    { path: "/create", component: BookFormView },
+    { path: "/create", name:'create',component: BookFormView },
     { path: "/settings", component: SettingsView },
-    { path: "/update/:id", component: BookFormView },
+    { path: "/update/:id",  component: BookFormView },
     { path: "/book/:id", component: BookDetailsView },
     { path: "/:pathMatch(.*)*", component: NotFoundView },];
 

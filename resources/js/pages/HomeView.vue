@@ -29,7 +29,6 @@ const filteredBooks = computed(() => {
     if (!data.value?.books) return [];
 
     if (activeTab.value === "all") {
-        console.log(data.value.books);
         return data.value.books.sort(
             (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );

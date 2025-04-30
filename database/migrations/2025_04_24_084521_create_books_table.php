@@ -25,7 +25,9 @@ return new class extends Migration {
             $table->date('release_date');
             $table->string('editor');
             $table->string('isbn');
-            $table->string('cover_image');
+            $table->binary('cover_image')->nullable();
+            $table->string('cover_image_path')->nullable();
+            $table->string('cover_image_name')->nullable();
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table

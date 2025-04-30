@@ -44,7 +44,7 @@ const defaultValues = {
     release_date: "1844-08-28",
     editor: "Gallimard",
     isbn: "978-2-07-040692-1",
-    cover_image:
+    cover_image_path:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Louis_Fran%C3%A7ais-Dant%C3%A8s_sur_son_rocher.jpg/1200px-Louis_Fran%C3%A7ais-Dant%C3%A8s_sur_son_rocher.jpg",
 };
 
@@ -59,7 +59,7 @@ const number_of_pages = ref(defaultValues.number_of_pages);
 const release_date = ref(defaultValues.release_date);
 const editor = ref(defaultValues.editor);
 const isbn = ref(defaultValues.isbn);
-const cover_image = ref(defaultValues.cover_image);
+const cover_image = ref(defaultValues.cover_image_path);
 
 // Si en mode édition et que le livre existe, remplacer les valeurs par défaut
 watchEffect(() => {
@@ -76,7 +76,7 @@ watchEffect(() => {
         release_date.value = actualBook.value.release_date?.split(" ")[0]; // Pour enlever la partie heure si présente
         editor.value = actualBook.value.editor;
         isbn.value = actualBook.value.isbn;
-        cover_image.value = actualBook.value.cover_image;
+        cover_image.value = actualBook.value.cover_image_path;
     }
 });
 

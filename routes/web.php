@@ -28,6 +28,7 @@ Route::prefix('api/v1')->group(function () {
   Route::delete('/user/book/{id}', [ApiController::class, 'deleteBookById']);
   Route::post('/create', [ApiController::class, 'createNewBook']);
   Route::patch('/update/{id}', [ApiController::class, 'updateBook']);
+  Route::get('/books/picture/{id}', [ApiController::class, 'fetchPicture']);
 });
 
 // Vue routes

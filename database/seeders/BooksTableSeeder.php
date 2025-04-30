@@ -175,12 +175,18 @@ class BooksTableSeeder extends Seeder
                 'cover_image' => 'https://covers.openlibrary.org/b/id/14832143-L.jpg',
             ],
         ];
-        
+
         foreach ($books as $bookData) {
             $createdAt = $this->randDate();
             $updatedAt = Carbon::parse($createdAt)->addDays(rand(0, 90));
             $releaseDate = Carbon::parse($bookData['release_date']);
-            
+
+            try {
+                $image = file_get_contents($bookData['cover_image']);
+            } catch (\Exception $e) {
+                $image = null; // Si l'image ne peut pas être récupérée, on la met à null}
+            }
+
             Book::create([
                 'title' => $bookData['title'],
                 'sub_title' => $bookData['sub_title'],
@@ -192,7 +198,9 @@ class BooksTableSeeder extends Seeder
                 'release_date' => $releaseDate,
                 'editor' => $bookData['editor'],
                 'isbn' => $bookData['isbn'],
-                'cover_image' => $bookData['cover_image'],
+                'cover_image' => $image,
+                'cover_image_path' => $bookData['cover_image'],
+                'cover_image_name' => basename(parse_url($bookData['cover_image'], PHP_URL_PATH)) || 'image.png',
                 'user_id' => 1,
                 'created_at' => $createdAt,
                 'updated_at' => $updatedAt,

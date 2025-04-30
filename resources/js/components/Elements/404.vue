@@ -36,7 +36,7 @@ import { RouterLink } from "vue-router";
             </RouterLink>
 
             <RouterLink
-                to="/new"
+                to="/create"
                 class="px-6 py-3 bg-card-bg text-text-default rounded-lg hover:opacity-80 transition-opacity flex items-center justify-center gap-2"
             >
                 <svg

@@ -5,6 +5,7 @@ import Badge from "../components/Base-Badge.vue";
 import BaseModifyButton from "../components/Buttons/Base-ModifyButton.vue";
 import BaseDeleteButton from "../components/Buttons/Base-DeleteButton.vue";
 import The404 from "../components/Elements/404.vue";
+import { useRouter } from "vue-router";
 
 // Setup des données et récupération du livre a afficher
 const data = inject("booksData", ref({ books: [] }));
@@ -23,6 +24,7 @@ const bookNotFound = computed(() => {
 // Action et animation de suppression
 const bookDeleted = ref(false);
 const showSuccessMessage = ref(false);
+const router = useRouter();
 
 const bookHasBeenDeleted = (HasBeenDeleted) => {
     if (HasBeenDeleted) {
@@ -68,7 +70,7 @@ const formattedReleaseDate = computed(() => {
             v-if="bookNotFound && !isLoading"
             class="flex flex-col items-center justify-center min-h-[70vh] px-4"
         >
-           <The404></The404>
+            <The404></The404>
         </div>
 
         <!-- Message de succès animé -->
@@ -110,7 +112,7 @@ const formattedReleaseDate = computed(() => {
                 <div class="rounded-lg">
                     <div class="flex justify-center mb-6">
                         <img
-                            :src="actualBook?.cover_image"
+                            :src="`/api/v1/books/picture/${actualBook?.id}`"
                             :alt="actualBook?.title"
                             class="h-64 rounded-lg shadow-lg"
                         />
@@ -306,7 +308,7 @@ const formattedReleaseDate = computed(() => {
                 </section>
 
                 <!-- Notes section -->
-                <section class="mb-6">
+                <!-- <section class="mb-6">
                     <h2 class="text-lg font-semibold text-text-default mb-3">
                         Notes
                     </h2>
@@ -316,7 +318,7 @@ const formattedReleaseDate = computed(() => {
                             placeholder="Commencer à écrire..."
                         ></textarea>
                     </div>
-                </section>
+                </section> -->
             </div>
         </div>
 
