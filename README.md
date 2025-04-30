@@ -1,66 +1,96 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 Lightshelf
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Lightshelf** est une application minimaliste de gestion de bibliothèque personnelle développée en **Laravel** (backend) et **Vue.js** (frontend).  
+Ce projet a été conçu comme un **exercice d'apprentissage** pour mieux comprendre la création d'applications web modernes, notamment en construisant **un système d'authentification personnalisé** sans utiliser de packages comme Laravel Breeze ou Fortify.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Objectif du projet
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Créer un outil simple pour **organiser, suivre et gérer sa collection de livres**.
+- Explorer et **implémenter manuellement** les mécanismes fondamentaux du web moderne : authentification, autorisation, gestion d'API RESTful.
+- Pratiquer la structuration d'une **Single Page Application (SPA)** avec **Vue.js** et **Laravel** comme API.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## 🛠️ Architecture générale
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Backend — Laravel
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Authentification personnalisée** :
+  - Inscription, connexion et déconnexion gérées via `AuthController`.
+  - Middleware Laravel (`guest` et `auth`) pour protéger les routes.
+  - Validation sécurisée des données utilisateurs via des **form requests personnalisés** (`AuthCreateUserValidation`, `AuthLoginValidation`).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **API REST pour les livres** :
+  - **CRUD partiel** pour les livres via `ApiController`.
+  - Seul l'utilisateur propriétaire peut supprimer ses propres livres (`deleteBookById` avec contrôle d'autorisation).
+  - Récupération de l'ensemble de la bibliothèque ou des livres spécifiques à un utilisateur.
 
-## Laravel Sponsors
+- **Base de données** :
+  - Deux tables principales : `users` et `books` (relation `User hasMany Books`).
+  - Les **seeders** (`UsersTableSeeder` et `BooksTableSeeder`) génèrent des données fictives pour tester l'application.
+  - Chaque livre est lié à un utilisateur (`user_id`) pour assurer la personnalisation.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Routes Laravel** :
+  - `/register` et `/login` pour l'authentification.
+  - `/api/v1/*` pour toutes les API publiques et privées (nécessitant l'authentification).
+  - Catch-all route (`/{any?}`) pour charger la SPA Vue.js (protégée par middleware `auth`).
 
-### Premium Partners
+### Frontend — Vue.js
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Single Page Application (SPA)** chargée à partir d'une unique vue Laravel (`index.blade.php`).
+- Vue communique avec Laravel via **API REST** pour :
+  - Afficher les livres.
+  - Ajouter un nouveau livre.
+  - Supprimer un livre.
+  - Voir les détails d'un livre.
+- Gestion du **state utilisateur** pour limiter l'accès aux fonctionnalités selon la connexion.
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🔐 Logique de sécurité
 
-## Code of Conduct
+- **Protection des actions sensibles** (création/suppression de livre) par vérification côté serveur (`Auth::check()` et contrôle du `user_id`).
+- **Validation stricte** des entrées utilisateur avec Laravel Form Request.
+- **Sécurisation des sessions** avec régénération de session après login (`$request->session()->regenerate()`).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+## 📚 Modèle de données (simplifié)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Utilisateur (`users`)
 
-## License
+| Champ        | Type        |
+|--------------|-------------|
+| id           | integer     |
+| firstname    | string      |
+| lastname     | string      |
+| email        | string      |
+| password     | string (hashé) |
+| admin        | boolean     |
+| timestamps   | timestamps  |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Livre (`books`)
+
+| Champ           | Type         |
+|-----------------|--------------|
+| id              | integer      |
+| title           | string       |
+| sub_title       | string       |
+| author          | string       |
+| reading_status  | enum (read, to-read, pending) |
+| resume          | text         |
+| format          | string       |
+| number_of_pages | integer      |
+| release_date    | date         |
+| editor          | string       |
+| isbn            | string       |
+| cover_image     | string (URL) |
+| user_id         | foreign key (users.id) |
+| timestamps      | timestamps   |
+
+
+## 🌟 Pourquoi Lightshelf est intéressant ?
+
+- **Le moins de dépendances possibles** : tout a été conçu "à la main", forçant à comprendre les détails.
+- **Apprentissage des bases de la gestion de la sécurité** sans surcharger l'application.
+- **Application complète** avec authentification, autorisation, CRUD API, SPA — ce qui en fait un **vrai projet de portfolio**.
+
+developpé avec 💙 par K-sel
