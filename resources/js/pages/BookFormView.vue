@@ -95,7 +95,7 @@ onMounted(() => {
     applyTheme();
 });
 
-const submitForm = async (e) => {
+const submitForm = (e) => {
     e.preventDefault();
     formSubmitted.value = true;
     errors.value = {};

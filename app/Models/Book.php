@@ -22,6 +22,7 @@ class Book extends Model
         'isbn',
         'cover_image',
         'cover_image_name',
+        'cover_image_path',
         'user_id'
     ];
     /**

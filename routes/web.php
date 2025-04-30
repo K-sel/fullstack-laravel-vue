@@ -22,13 +22,22 @@ Route::post('/password/update', [App\Http\Controllers\PasswordController::class,
 // Api routes
 Route::prefix('api/v1')->group(function () {
   Route::get('/users/all', [ApiController::class, 'fetchAllUsers']);
+  Route::get('/user', [ApiController::class, 'fetchUser']);
+  Route::delete('/user/delete', [ApiController::class, 'deleteUser'])->middleware('auth');
   Route::get('/books/all', [ApiController::class, 'fetchAllBooks']);
   Route::get('/user/books', [ApiController::class, 'fetchUserBooks']);
+  Route::post('/user/update', [ApiController::class, 'updateUserProfile']);
   Route::get('/user/book/{id}', [ApiController::class, 'fetchBookById']);
   Route::delete('/user/book/{id}', [ApiController::class, 'deleteBookById']);
-  Route::post('/create', [ApiController::class, 'createNewBook']);
   Route::patch('/update/{id}', [ApiController::class, 'updateBook']);
-  Route::get('/books/picture/{id}', [ApiController::class, 'fetchPicture']);
+
+  // Uniques routes
+  Route::post('/create', [ApiController::class, 'createNewBook']);
+
+  // Pictures routes
+  Route::get('/picture/book/{id}', [ApiController::class, 'fetchPicture']);
+  //Route::get('/picture/user/{id}', [ApiController::class, 'fetchPicture']);
+
 });
 
 // Vue routes

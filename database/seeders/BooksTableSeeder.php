@@ -42,7 +42,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2004-09-02',
                 'editor' => 'First Editions',
                 'isbn' => '978-2876914834',
-                'cover_image' => 'https://static.fnac-static.com/multimedia/PE/Images/FR/NR/67/9b/56/5675879/1507-1/tsp20250325121952/Influence-et-manipulation.jpg',
+                'cover_image' => 'https://machagalerielibrairie.com/wp-content/uploads/2022/05/Influence-et-manipulation.png',
             ],
             [
                 'title' => 'Power',
@@ -81,7 +81,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2015-05-01',
                 'editor' => 'Albin Michel',
                 'isbn' => '978-2226257017',
-                'cover_image' => 'https://static.fnac-static.com/multimedia/PE/Images/FR/NR/48/79/6c/7108936/1507-1/tsp20250127075013/Sapiens-edition-2022.jpg',
+                'cover_image' => 'https://m.media-amazon.com/images/I/716E6dQ4BXL._AC_UF1000,1000_QL80_.jpg',
             ],
             [
                 'title' => 'Nexus',
@@ -94,7 +94,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2013-06-13',
                 'editor' => 'Angry Robot',
                 'isbn' => '978-0857662934',
-                'cover_image' => 'https://static.fnac-static.com/multimedia/PE/Images/FR/NR/ac/2f/13/18034604/1507-1/tsp20241203083943/Nexus-version-francaise-Meilleur-eai-2024-Lire-Magazine.jpg',
+                'cover_image' => 'https://m.media-amazon.com/images/I/71l4l6o2drL.jpg',
             ],
             [
                 'title' => 'La femme de ménage',

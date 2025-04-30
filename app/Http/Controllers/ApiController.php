@@ -3,16 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NewBookRequest;
+use App\Http\Requests\ProfileRequest;
 use App\Models\Book;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ApiController extends Controller
 {
+    public function updateUserProfile(ProfileRequest $request)
+    {
+        $user = User::findOrFail(Auth::user()->id);
+        $user->update($request->validated());
+        return response()->json($user, 200);
+    }
+
+    public function deleteUser()
+    {
+        try {
+            Book::where('user_id', Auth::user()->id)->delete();
+            $user = User::findOrFail(Auth::user()->id);
+            $user->delete();
+            return response()->noContent();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erreur lors de la suppression', 'message' => $e->getMessage()], 500);
+        }
+    }
+
     public function fetchAllUsers()
     {
         $users = User::all();
         return response()->json($users);
+    }
+
+    public function fetchUser()
+    {
+        $id = Auth::user()->id;
+        $user = User::findOrFail($id);
+        return response()->json($user);
     }
 
     public function fetchAllBooks()
@@ -68,20 +96,24 @@ class ApiController extends Controller
             return response()->json(['error' => 'Utilisateur non authentifié'], 401);
         }
 
-        try {
-            // Créer le livre dans la base de données
-            $validatedData = $request->validated();
-            $url = $validatedData['cover_image'];
+        $validatedData = $request->validated();
+        $url = $validatedData['cover_image'];
 
+        // Récupérer le contenu de l'image
+        try {
+            $imageContent = file_get_contents($url);
+        } catch (\Exception $e) {
+            $imageContent = file_get_contents(public_path('images/no-image.jpg'));
+        }
+
+        try {
             // Extraire le nom de l'image depuis l'URL
             $imageName = basename(parse_url($url, PHP_URL_PATH));
-
-            // Récupérer le contenu de l'image
-            $imageContent = file_get_contents($url);
 
             // Mettre à jour les données validées - stockage en binaire brut
             $validatedData['cover_image'] = $imageContent;
             $validatedData['cover_image_name'] = $imageName ?: 'image.png';
+            $validatedData['cover_image_path'] = $url;
             $validatedData['user_id'] = Auth::user()->id;
 
             // Créer le livre

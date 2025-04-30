@@ -112,7 +112,7 @@ const formattedReleaseDate = computed(() => {
                 <div class="rounded-lg">
                     <div class="flex justify-center mb-6">
                         <img
-                            :src="`/api/v1/books/picture/${actualBook?.id}`"
+                            :src="`/api/v1/picture/book/${actualBook?.id}`"
                             :alt="actualBook?.title"
                             class="h-64 rounded-lg shadow-lg"
                         />

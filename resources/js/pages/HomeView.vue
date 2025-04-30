@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed, inject } from "vue";
+import { ref, computed, onMounted, inject, watchEffect } from "vue";
+import { useFetchJson } from "../composables/useFetchJson";
 import BookCard from "../components/Elements/Base-BookCard.vue";
 import TheControls from "../components/TheControls.vue";
 import TheProfile from "../components/TheProfile.vue";
@@ -9,11 +10,15 @@ const data = inject("booksData");
 const errors = inject("booksErrors");
 const isLoading = inject("isBooksLoading");
 
+const responseData = ref(null);
+const responseError = ref(null);
+
 // Props et état local
 const profileImage = ref("/images/profile-image.png");
 const bioText = ref(
     "Je suis un passionné de littérature française contemporaine, avec un penchant particulier pour les romans d'auteurs comme David Foenkinos et Anna Gavalda."
 );
+
 const activeTab = ref("all");
 
 // Données
@@ -41,6 +46,34 @@ const filteredBooks = computed(() => {
         return data.value.books.filter(
             (book) => book.reading_status === statusMap[activeTab.value]
         );
+    }
+});
+
+// Chargement des données utilisateur
+const loadUserData = () => {
+    isLoading.value = true;
+
+    try {
+        // Envoyer les données au serveur
+        useFetchJson(responseData, responseError, isLoading, {
+            url: "/api/v1/user",
+            method: "GET",
+        });
+    } catch (error) {
+        console.error("Error loading user data:", error);
+        showFeedback("Failed to load user data", "error");
+    } finally {
+        isLoading.value = false;
+    }
+};
+
+onMounted(() => {
+    loadUserData();
+});
+
+watchEffect(() => {
+    if (responseData.value) {
+        bioText.value = responseData.value.bio;
     }
 });
 </script>

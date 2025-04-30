@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             // Ajouter les nouveaux champs
             $table->string('firstname');
-            $table->text('lastname');
-            
+            $table->string('lastname');
+            $table->text('bio')->nullable();
+
             // Supprimer le champ name
             $table->dropColumn('name');
         });

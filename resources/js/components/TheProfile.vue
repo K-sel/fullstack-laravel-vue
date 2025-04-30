@@ -8,7 +8,7 @@ const props = defineProps({
     },
     bioText: {
         type: String,
-        required: true,
+        required: false,
         default:
             "Je suis un passionné de littérature française contemporaine, avec un penchant particulier pour les romans d'auteurs comme David Foenkinos et Anna Gavalda.",
     },
@@ -28,7 +28,7 @@ const props = defineProps({
 
         <!-- Bio text -->
         <p class="text-text-default text-center max-w-xs mb-4">
-            {{ bioText }}
+            {{ props.bioText }}
         </p>
     </div>
 </template>
