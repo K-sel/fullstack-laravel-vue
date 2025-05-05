@@ -189,14 +189,14 @@ watchEffect(() => {
                     <div>
                         <label
                             for="firstname"
-                            class="block text-sm font-medium text-gray-300 mb-2"
+                            class="block text-sm font-medium text-sub-text-lighter mb-2"
                             >First name</label
                         >
                         <input
                             id="firstname"
                             v-model="firstName"
                             type="text"
-                            class="w-full px-3 py-2 border border-zinc-800 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white"
+                            class="w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white"
                             placeholder="Your first name"
                         />
                     </div>
@@ -205,14 +205,14 @@ watchEffect(() => {
                     <div>
                         <label
                             for="lastname"
-                            class="block text-sm font-medium text-gray-300 mb-2"
+                            class="block text-sm font-medium text-sub-text-lighter mb-2"
                             >Last name</label
                         >
                         <input
                             id="lastname"
                             v-model="lastName"
                             type="text"
-                            class="w-full px-3 py-2 border border-zinc-800 rounded-md bg-zinc-900 placeholder-gray-500 text-white focus:outline-none focus:ring-1 focus:ring-white focus:border-white"
+                            class="w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white"
                             placeholder="Your last name"
                         />
                     </div>
@@ -221,7 +221,7 @@ watchEffect(() => {
                     <div>
                         <label
                             for="email"
-                            class="block text-sm font-medium text-gray-300 mb-2"
+                            class="block text-sm font-medium text-sub-text-lighter mb-2"
                             >Email address</label
                         >
                         <input
@@ -229,7 +229,7 @@ watchEffect(() => {
                             v-model="email"
                             type="email"
                             readonly
-                            class="w-full px-3 py-2 border border-zinc-800 rounded-md bg-zinc-900 text-gray-400 focus:outline-none"
+                            class="w-full px-3 py-2  border-zinc-800 rounded-md bg-card-bg text-text-default focus:outline-none"
                             placeholder="Your email address"
                         />
                     </div>
@@ -251,7 +251,8 @@ watchEffect(() => {
                     <div>
                         <button
                             type="submit"
-                            class="px-4 py-2 bg-white text-black rounded-md font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-zinc-900"
+                            id="submit"
+                            class="px-4 py-2 bg-card-bg text-text-default rounded-md"
                             :disabled="isLoading"
                         >
                             <span v-if="isLoading">Saving...</span>
@@ -309,4 +310,40 @@ textarea {
     overflow: hidden;
     resize: none;
 }
+
+/* Using CSS variables from the root to support dark and light mode */
+.bg-bg-default {
+    background-color: var(--bg-default, #121212);
+}
+
+.bg-card-bg {
+    background-color: var(--card-bg);
+}
+
+.bg-nav-button-bg {
+    background-color: var(--nav-button-bg);
+}
+
+.text-text-default {
+    color: var(--text-default, #ffffff);
+}
+
+.text-sub-text-lighter {
+    color: var(--sub-text-lighter);
+}
+
+/* Status badge styles */
+.bg-badge-bg {
+    background-color: var(--badge-bg);
+}
+
+.text-badge-text {
+    color: var(--badge-text);
+}
+
+button#submit:hover {
+    background-color: var(--text-default);
+    color: var(--bg-default);
+}
+
 </style>

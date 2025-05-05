@@ -11,7 +11,7 @@ const bookAdded = ref(false);
 const showSuccessMessage = ref(false);
 
 // Setup des données et récupération du livre a afficher
-const data = inject("booksData", ref({ books: [] }));
+const data = inject("booksData");
 
 const typeOfForm =
     window.location.pathname.split("/")[1] === "update" ? "update" : "create";
@@ -233,7 +233,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="title"
                     name="title"
                     id="title"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     maxlength="255"
                     placeholder="Titre du livre"
                 />
@@ -254,7 +254,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="sub_title"
                     name="sub_title"
                     id="sub_title"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     maxlength="255"
                     placeholder="Sous-titre du livre"
                 />
@@ -275,7 +275,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="author"
                     name="author"
                     id="author"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     required
                     maxlength="255"
                     placeholder="Nom de l'auteur"
@@ -296,7 +296,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="reading_status"
                     name="reading_status"
                     id="reading_status"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     required
                 >
                     <option value="to-read">À lire</option>
@@ -320,7 +320,7 @@ const extractSimpleObject = (proxyObject) => {
                     name="resume"
                     id="resume"
                     rows="4"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     maxlength="2000"
                     placeholder="Résumé du livre"
                 ></textarea>
@@ -341,7 +341,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="format"
                     name="format"
                     id="format"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     maxlength="100"
                     placeholder="Poche, Broché, etc."
                 />
@@ -362,7 +362,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="number_of_pages"
                     name="number_of_pages"
                     id="number_of_pages"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     required
                     min="0"
                     placeholder="250"
@@ -384,7 +384,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="release_date"
                     name="release_date"
                     id="release_date"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     required
                 />
             </div>
@@ -404,7 +404,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="editor"
                     name="editor"
                     id="editor"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     maxlength="255"
                     placeholder="Nom de l'éditeur"
                 />
@@ -425,7 +425,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="isbn"
                     name="isbn"
                     id="isbn"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     maxlength="20"
                     placeholder="978-2-1234-5680-3"
                 />
@@ -446,7 +446,7 @@ const extractSimpleObject = (proxyObject) => {
                     v-model="cover_image_path"
                     name="cover_image_path"
                     id="cover_image_path"
-                    class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
+                    class="mt-1 appearance-none block w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     placeholder="https://example.com/book-cover.jpg"
                 />
             </div>
@@ -458,7 +458,8 @@ const extractSimpleObject = (proxyObject) => {
             <div class="pt-4">
                 <button
                     type="submit"
-                    class="w-full flex justify-center py-2 px-4 border border-text-default text-sm font-medium rounded-md bg-bg-default text-text-default hover:bg-text-default hover:text-bg-default transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-text-default focus:ring-offset-bg-card-bg"
+                    id="submit"
+                    class="w-full flex justify-center py-2 px-4 bg-card-bg text-text-default rounded-md"
                     :disabled="isLoading"
                 >
                     <span v-if="!isLoading">{{ submitTitle }}</span>
@@ -500,8 +501,13 @@ const extractSimpleObject = (proxyObject) => {
     color: var(--badge-text);
 }
 
+button#submit:hover {
+    background-color: var(--text-default);
+    color: var(--bg-default);
+}
+
 /* Disable button styles */
-button:disabled {
+button#submit:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
