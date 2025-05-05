@@ -196,7 +196,7 @@ watchEffect(() => {
                             id="firstname"
                             v-model="firstName"
                             type="text"
-                            class="w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white"
+                            class="w-full px-3 py-2 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white"
                             placeholder="Your first name"
                         />
                     </div>
@@ -212,7 +212,7 @@ watchEffect(() => {
                             id="lastname"
                             v-model="lastName"
                             type="text"
-                            class="w-full px-3 py-2  rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white"
+                            class="w-full px-3 py-2 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white"
                             placeholder="Your last name"
                         />
                     </div>
@@ -229,7 +229,7 @@ watchEffect(() => {
                             v-model="email"
                             type="email"
                             readonly
-                            class="w-full px-3 py-2  border-zinc-800 rounded-md bg-card-bg text-text-default focus:outline-none"
+                            class="w-full px-3 py-2 border-zinc-800 rounded-md bg-card-bg text-sub-text-lighter focus:outline-none"
                             placeholder="Your email address"
                         />
                     </div>
@@ -345,5 +345,4 @@ button#submit:hover {
     background-color: var(--text-default);
     color: var(--bg-default);
 }
-
 </style>
