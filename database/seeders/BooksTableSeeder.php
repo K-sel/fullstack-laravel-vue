@@ -29,7 +29,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2023-05-15',
                 'editor' => 'Neuroscience Publications',
                 'isbn' => '978-1234567890',
-                'cover_image' => 'https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781668032145/protocols-9781668032145_hr.jpg',
+                'cover_image_path' => 'https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781668032145/protocols-9781668032145_hr.jpg',
             ],
             [
                 'title' => 'Influence et manipulation',
@@ -42,7 +42,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2004-09-02',
                 'editor' => 'First Editions',
                 'isbn' => '978-2876914834',
-                'cover_image' => 'https://machagalerielibrairie.com/wp-content/uploads/2022/05/Influence-et-manipulation.png',
+                'cover_image_path' => 'https://machagalerielibrairie.com/wp-content/uploads/2022/05/Influence-et-manipulation.png',
             ],
             [
                 'title' => 'Power',
@@ -55,7 +55,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2009-11-03',
                 'editor' => 'Viking Press',
                 'isbn' => '978-0140280197',
-                'cover_image' => 'https://m.media-amazon.com/images/I/611X8GI7hpL.jpg',
+                'cover_image_path' => 'https://m.media-amazon.com/images/I/611X8GI7hpL.jpg',
             ],
             [
                 'title' => '12 règles pour une vie',
@@ -68,7 +68,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2018-01-23',
                 'editor' => 'Random House Canada',
                 'isbn' => '978-0345816023',
-                'cover_image' => 'https://m.media-amazon.com/images/I/71OVB8HknWL.jpg',
+                'cover_image_path' => 'https://m.media-amazon.com/images/I/71OVB8HknWL.jpg',
             ],
             [
                 'title' => 'Sapiens',
@@ -81,7 +81,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2015-05-01',
                 'editor' => 'Albin Michel',
                 'isbn' => '978-2226257017',
-                'cover_image' => 'https://m.media-amazon.com/images/I/716E6dQ4BXL._AC_UF1000,1000_QL80_.jpg',
+                'cover_image_path' => 'https://m.media-amazon.com/images/I/716E6dQ4BXL._AC_UF1000,1000_QL80_.jpg',
             ],
             [
                 'title' => 'Nexus',
@@ -94,7 +94,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2013-06-13',
                 'editor' => 'Angry Robot',
                 'isbn' => '978-0857662934',
-                'cover_image' => 'https://m.media-amazon.com/images/I/71l4l6o2drL.jpg',
+                'cover_image_path' => 'https://m.media-amazon.com/images/I/71l4l6o2drL.jpg',
             ],
             [
                 'title' => 'La femme de ménage',
@@ -107,7 +107,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2022-04-26',
                 'editor' => 'Milady',
                 'isbn' => '978-2290391174',
-                'cover_image' => 'https://images.epagine.fr/174/9782290391174_1_75.jpg',
+                'cover_image_path' => 'https://images.epagine.fr/174/9782290391174_1_75.jpg',
             ],
             [
                 'title' => 'Outlive',
@@ -120,7 +120,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2023-03-28',
                 'editor' => 'Harmony Books',
                 'isbn' => '978-0593236598',
-                'cover_image' => 'https://m.media-amazon.com/images/I/41w+zyAK8NL._SL500_.jpg',
+                'cover_image_path' => 'https://m.media-amazon.com/images/I/41w+zyAK8NL._SL500_.jpg',
             ],
             [
                 'title' => 'Can\'t Hurt Me',
@@ -133,7 +133,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2018-12-04',
                 'editor' => 'Lioncrest Publishing',
                 'isbn' => '978-1544512273',
-                'cover_image' => 'https://cdn.kobo.com/book-images/80916399-e514-45a4-b63f-983a9a2aaa78/1200/1200/False/can-t-hurt-me.jpg',
+                'cover_image_path' => 'https://cdn.kobo.com/book-images/80916399-e514-45a4-b63f-983a9a2aaa78/1200/1200/False/can-t-hurt-me.jpg',
             ],
             [
                 'title' => 'The One Thing',
@@ -146,7 +146,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2014-04-01',
                 'editor' => 'Belfond',
                 'isbn' => '978-2714459329',
-                'cover_image' => 'https://cdn.kobo.com/book-images/ae538d49-2dc7-42a2-8b3e-907ee3495747/1200/1200/False/the-one-thing-passez-a-l-essentiel-1.jpg',
+                'cover_image_path' => 'https://cdn.kobo.com/book-images/ae538d49-2dc7-42a2-8b3e-907ee3495747/1200/1200/False/the-one-thing-passez-a-l-essentiel-1.jpg',
             ],
             [
                 'title' => 'Pensées pour moi-même',
@@ -159,7 +159,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2018-09-06',
                 'editor' => 'Les Belles Lettres',
                 'isbn' => '978-2251447094',
-                'cover_image' => 'https://biblia.lesbelleslettres.com/data/cache/Product/front_cover_picture/big/6/9/2068.1646301483.jpg',
+                'cover_image_path' => 'https://biblia.lesbelleslettres.com/data/cache/Product/front_cover_picture/big/6/9/2068.1646301483.jpg',
             ],
             [
                 'title' => 'The Subtle Art of Not Giving a F*ck',
@@ -172,7 +172,7 @@ class BooksTableSeeder extends Seeder
                 'release_date' => '2016-09-13',
                 'editor' => 'HarperOne',
                 'isbn' => '978-0062457714',
-                'cover_image' => 'https://covers.openlibrary.org/b/id/14832143-L.jpg',
+                'cover_image_path' => 'https://covers.openlibrary.org/b/id/14832143-L.jpg',
             ],
         ];
 
@@ -182,9 +182,9 @@ class BooksTableSeeder extends Seeder
             $releaseDate = Carbon::parse($bookData['release_date']);
 
             try {
-                $image = file_get_contents($bookData['cover_image']);
+                $image = file_get_contents($bookData['cover_image_path']);
             } catch (\Exception $e) {
-                $image = null; // Si l'image ne peut pas être récupérée, on la met à null}
+                $image = file_get_contents(public_path('images/no-image.jpg'));
             }
 
             Book::create([
@@ -199,7 +199,7 @@ class BooksTableSeeder extends Seeder
                 'editor' => $bookData['editor'],
                 'isbn' => $bookData['isbn'],
                 'cover_image' => $image,
-                'cover_image_path' => $bookData['cover_image'],
+                'cover_image_path' => $bookData['cover_image_path'],
                 'cover_image_name' => basename(parse_url($bookData['cover_image'], PHP_URL_PATH)) || 'image.png',
                 'user_id' => 1,
                 'created_at' => $createdAt,

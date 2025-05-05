@@ -15,9 +15,9 @@ import { fetchJson } from '@/utils/fetchJson';
  */
 export function useFetchJson(data, error, loading, options) {
   // Reset state
-  data.value = null;
-  error.value = null;
-  loading.value = true;
+  // data.value = null;
+  // error.value = null;
+  // loading.value = true;
 
   const { request, abort } = fetchJson(options);
   request

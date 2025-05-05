@@ -97,7 +97,7 @@ class ApiController extends Controller
         }
 
         $validatedData = $request->validated();
-        $url = $validatedData['cover_image'];
+        $url = $validatedData['cover_image_path'];
 
         // Récupérer le contenu de l'image
         try {
@@ -144,10 +144,23 @@ class ApiController extends Controller
             }
 
             $validatedData = $request->validated();
+            $url = $validatedData['cover_image_path'];
+            // Récupérer le contenu de l'image
+            try {
+                $imageContent = file_get_contents($url);
+            } catch (\Exception $e) {
+                $imageContent = file_get_contents(public_path('images/no-image.jpg'));
+            }
+            // Extraire le nom de l'image depuis l'URL
+            $imageName = basename(parse_url($url, PHP_URL_PATH));
+            // Mettre à jour les données validées - stockage en binaire brut
+            $validatedData['cover_image'] = $imageContent;
+            $validatedData['cover_image_path'] = $url;
+            $validatedData['cover_image_name'] = $imageName ?: 'image.png';
 
             $oldBook = $book->toArray();
 
-            $book->fill($request->only(array_keys($validatedData)));
+            $book->fill($validatedData);
 
             // Sauvegarder les modifications
             $book->save();

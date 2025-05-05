@@ -36,8 +36,8 @@ Route::prefix('api/v1')->group(function () {
 
   // Pictures routes
   Route::get('/picture/book/{id}', [ApiController::class, 'fetchPicture']);
+  Route::post('/picture/user/upload', [ApiController::class, 'changeProfilePicture'])->middleware('auth');
   //Route::get('/picture/user/{id}', [ApiController::class, 'fetchPicture']);
-
 });
 
 // Vue routes

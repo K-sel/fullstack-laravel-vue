@@ -17,6 +17,7 @@ const typeOfForm =
     window.location.pathname.split("/")[1] === "update" ? "update" : "create";
 const formTitle =
     typeOfForm === "update" ? "Modifier le livre" : "Ajouter un livre";
+
 const submitTitle =
     typeOfForm === "update"
         ? "Enregistrer les modifications"
@@ -59,10 +60,11 @@ const number_of_pages = ref(defaultValues.number_of_pages);
 const release_date = ref(defaultValues.release_date);
 const editor = ref(defaultValues.editor);
 const isbn = ref(defaultValues.isbn);
-const cover_image = ref(defaultValues.cover_image_path);
+const cover_image_path = ref(defaultValues.cover_image_path);
 
 // Si en mode édition et que le livre existe, remplacer les valeurs par défaut
 watchEffect(() => {
+    console.log(data.value);
     if (typeOfForm === "update" && !bookNotFound.value && actualBook.value) {
         console.log("Livre à modifier", actualBook.value);
 
@@ -76,7 +78,7 @@ watchEffect(() => {
         release_date.value = actualBook.value.release_date?.split(" ")[0]; // Pour enlever la partie heure si présente
         editor.value = actualBook.value.editor;
         isbn.value = actualBook.value.isbn;
-        cover_image.value = actualBook.value.cover_image_path;
+        cover_image_path.value = actualBook.value.cover_image_path;
     }
 });
 
@@ -114,7 +116,7 @@ const submitForm = (e) => {
         release_date: release_date.value,
         editor: editor.value,
         isbn: isbn.value,
-        cover_image: cover_image.value,
+        cover_image_path: cover_image_path.value,
     };
 
     try {
@@ -130,6 +132,8 @@ const submitForm = (e) => {
 
 watchEffect(() => {
     console.log(responseError.value);
+    console.log(responseData.value);
+
     if (responseData.value) {
         console.log(responseData.value);
         // Traitement en cas de succès
@@ -157,7 +161,6 @@ watchEffect(() => {
     }
 });
 
-// Supposons que votre Proxy Object est stocké dans une variable appelée proxyObject
 const extractSimpleObject = (proxyObject) => {
     const result = {};
 
@@ -434,15 +437,15 @@ const extractSimpleObject = (proxyObject) => {
             <!-- Cover Image URL -->
             <div class="form-group">
                 <label
-                    for="cover_image"
+                    for="cover_image_path"
                     class="block text-sm font-medium text-sub-text-lighter"
                     >URL de couverture</label
                 >
                 <input
                     type="url"
-                    v-model="cover_image"
-                    name="cover_image"
-                    id="cover_image"
+                    v-model="cover_image_path"
+                    name="cover_image_path"
+                    id="cover_image_path"
                     class="mt-1 appearance-none block w-full px-3 py-2 border border-zinc-700 rounded-md bg-card-bg placeholder-gray-500 text-text-default focus:outline-none focus:ring-1 focus:ring-white focus:border-white sm:text-sm"
                     placeholder="https://example.com/book-cover.jpg"
                 />

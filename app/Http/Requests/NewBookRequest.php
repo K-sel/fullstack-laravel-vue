@@ -32,7 +32,7 @@ class NewBookRequest extends FormRequest
             'release_date' => 'required|date',
             'editor' => 'required|string|max:255',
             'isbn' => 'required|string|max:20|regex:/^[0-9-]+$/',
-            'cover_image' => 'required|url',
+            'cover_image_path' => 'required|url',
         ];
     }
 }

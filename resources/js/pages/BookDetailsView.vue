@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, inject } from "vue";
+import { ref, computed, inject, watchEffect } from "vue";
 import TheControls from "../components/TheControls.vue";
 import Badge from "../components/Base-Badge.vue";
 import BaseModifyButton from "../components/Buttons/Base-ModifyButton.vue";
@@ -13,6 +13,7 @@ const errors = inject("booksErrors");
 const isLoading = inject("isBooksLoading");
 
 const bookId = window.location.pathname.split("/").pop();
+
 const actualBook = computed(() => {
     return data.value?.books.find((book) => book.id == bookId);
 });
@@ -55,6 +56,10 @@ const formattedReleaseDate = computed(() => {
     } catch (e) {
         return actualBook.value.release_date || "Date non spécifiée";
     }
+});
+
+watchEffect(() => {
+    console.log(actualBook.value);
 });
 </script>
 

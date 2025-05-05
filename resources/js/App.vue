@@ -7,9 +7,6 @@ const booksData = ref({ books: [] });
 const booksErrors = ref(null);
 const isBooksLoading = ref(false);
 
-addEventListener("storage", (event) => {console.log(event.key);});
-onstorage = (event) => {console.log(event.key);};
-
 provide("booksData", booksData);
 provide("booksErrors", booksErrors);
 provide("isBooksLoading", isBooksLoading);
@@ -21,9 +18,6 @@ onMounted(() => {
     });
 });
 
-watchEffect(() => {
-    localStorage.setItem("booksData", JSON.stringify(booksData.value));
-});
 </script>
 
 <template>

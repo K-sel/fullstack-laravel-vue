@@ -4,7 +4,7 @@ import { useFetchJson } from "@/composables/useFetchJson"; // Assurez-vous que l
 import TheControls from "@/components/TheControls.vue"; // Assurez-vous que le chemin est correct
 
 // États réactifs
-const profilePic = ref(null);
+const profileImage = ref("/images/profile-image.png");
 const firstName = ref("");
 const lastName = ref("");
 const email = ref("");
@@ -12,7 +12,6 @@ const bio = ref("Write something about yourself...");
 
 const feedbackMessage = ref("");
 const feedbackStatus = ref("");
-const profilePicFile = ref(null);
 
 const responseData = ref(null);
 const responseError = ref(null);
@@ -25,15 +24,10 @@ const loadUserData = () => {
 
     try {
         // Envoyer les données au serveur
-        const response = useFetchJson(
-            responseData,
-            responseError,
-            isLoading,
-            {
-                url: "/api/v1/user",
-                method: "GET",
-            }
-        );
+        useFetchJson(responseData, responseError, isLoading, {
+            url: "/api/v1/user",
+            method: "GET",
+        });
     } catch (error) {
         console.error("Error loading user data:", error);
         showFeedback("Failed to load user data", "error");
@@ -55,7 +49,7 @@ const submitForm = (e) => {
         };
 
         // Envoyer les données au serveur
-        const response = useFetchJson(responseData, responseError, isLoading, {
+        useFetchJson(responseData, responseError, isLoading, {
             url: "/api/v1/user/update",
             method: "POST",
             data: userData,
@@ -119,6 +113,7 @@ onMounted(() => {
 
 watchEffect(() => {
     console.log("SERVER RESPONSE DATA", responseData.value);
+    console.log("SERVER ERROR RESPONSE", responseError.value);
 
     if (responseData.value) {
         firstName.value = responseData.value.firstname;
@@ -127,7 +122,7 @@ watchEffect(() => {
         bio.value = responseData.value.bio;
     }
 
-    if(confirmDelete.value === true) {
+    if (confirmDelete.value === true) {
         alert("Account deleted successfully. You will be logged out.");
         confirmDelete.value = false;
         window.location.href = "/logout";
@@ -148,8 +143,8 @@ watchEffect(() => {
                     class="w-24 h-24 rounded-full bg-emerald-100 flex items-center justify-center overflow-hidden"
                 >
                     <img
-                        v-if="profilePic"
-                        :src="profilePic"
+                        v-if="profileImage"
+                        :src="profileImage"
                         alt="Profile"
                         class="w-full h-full object-cover"
                     />
@@ -237,29 +232,6 @@ watchEffect(() => {
                             class="w-full px-3 py-2 border border-zinc-800 rounded-md bg-zinc-900 text-gray-400 focus:outline-none"
                             placeholder="Your email address"
                         />
-                    </div>
-
-                    <!-- Profile Picture -->
-                    <div>
-                        <label
-                            class="block text-sm font-medium text-gray-300 mb-2"
-                            >Profile Picture</label
-                        >
-                        <div class="flex items-center">
-                            <label
-                                for="profile-pic-upload"
-                                class="px-3 py-2 bg-zinc-800 rounded-md text-sm font-medium hover:bg-zinc-700 cursor-pointer"
-                            >
-                                Change profile picture
-                            </label>
-                            <input
-                                id="profile-pic-upload"
-                                type="file"
-                                accept="image/*"
-                                class="hidden"
-                                @change="handleProfilePicUpload"
-                            />
-                        </div>
                     </div>
 
                     <!-- Feedback message -->
