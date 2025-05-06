@@ -13,6 +13,16 @@
     @endif
 </head>
 
+<style>
+    :root {
+         background-color: black;
+     }
+     
+     html, body {
+         background-color: black;
+         overflow-x: hidden;
+     }
+</style>
 
 <body>
     @auth
@@ -21,7 +31,14 @@
         @endif
     @endauth
 
-    @yield('auth')
+    @guest
+        @if (Request::is('login') || Request::is('register'))
+            @yield('auth')
+        @else
+            @yield('landing')
+        @endif
+    @endguest
+
 </body>
 
 </html>

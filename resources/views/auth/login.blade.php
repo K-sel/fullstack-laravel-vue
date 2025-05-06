@@ -38,14 +38,7 @@
                 </div>
 
                 <div>
-                    {{-- <div class="flex items-center justify-between">
-                    <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
-                    <div class="text-sm">
-                        <a href="{{route('reset-password')}}" class="font-medium text-gray-400 hover:text-white">
-                            Forgot password?
-                        </a>
-                    </div>
-                </div> --}}
+              
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-300 py-1">Password</label>
                         <div class="relative mt-1">
@@ -72,12 +65,6 @@
                 </div>
 
                 <div class="flex items-center justify-between">
-                    {{-- <div class="flex items-center">
-                    <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-white focus:ring-white border-zinc-700 rounded bg-zinc-900">
-                    <label for="remember_me" class="ml-2 block text-sm text-gray-300">
-                        Remember me
-                    </label>
-                </div> --}}
 
                     @if (session('success'))
                         <p class="text-green-500 text-sm">{{ session('success') }}</p>
@@ -95,11 +82,25 @@
                     </button>
                 </div>
 
-                <div class="text-center mt-4">
-                    <a href="{{ route('showRegister') }}" class="text-sm font-medium text-gray-400 hover:text-white">
-                        Don't have an account? Sign up
-                    </a>
+                <div>
+                    <div class="text-center mt-4">
+                        <a href="{{ route('showRegister') }}" class="text-sm font-medium text-gray-400 hover:text-white">
+                            Don't have an account? Sign up
+                        </a>
+                    </div>
+
+                    <div class="flex items-center my-6">
+                        <div class="flex-grow border-t border-zinc-700"></div>
+                        <span class="px-4 text-sm text-gray-400">or</span>
+                        <div class="flex-grow border-t border-zinc-700"></div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{{ route('landing') }}" class="text-sm font-medium text-gray-400 hover:text-white">
+                            Return to landing page
+                        </a>
+                    </div>
                 </div>
+
             </form>
         </div>
     </div>

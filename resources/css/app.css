@@ -1,6 +1,5 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @source "../views";
-
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -8,14 +7,15 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
 }
-
-
 
 /* Primitives */
 :root {
+    background-color: var(--bg-default);
+
     /* Mode 1 */
     /* color */
     --black: #000000;
@@ -100,10 +100,16 @@
     --size-30: 1.875rem;
     --size-32: 2rem;
     --size-∞: 624.9375rem;
-  }
-  
-  /* Light Mode (default) */
-  :root {
+}
+
+html,
+body {
+    background-color: var(--bg-default);
+    overflow-x: hidden;
+}
+
+/* Light Mode (default) */
+:root {
     --red-gradient: var(--red-200);
     --badge-bg: var(--blue-100);
     --badge-text: var(--blue-800);
@@ -113,11 +119,12 @@
     --nav-button-bg: var(--gray-200);
     --sub-text-lighter: #00000080;
     --text-default: var(--gray-900);
-  }
-  
-  /* Dark Mode */
-  :root.dark-mode, 
-  :root[data-theme="dark"] {
+
+}
+
+/* Dark Mode */
+:root.dark-mode,
+:root[data-theme="dark"] {
     --red-gradient: var(--red-950);
     --badge-bg: var(--blue-100);
     --badge-text: var(--blue-800);
@@ -127,7 +134,18 @@
     --nav-button-bg: var(--gray-800);
     --sub-text-lighter: #ffffff80;
     --text-default: var(--gray-100);
-  }
-  body, button, div, span, p, h1, h2, h3, h4, h5, h6 {
-    transition: background-color 0.3s ease, color 0.3s ease; 
-  }
+
+}
+body,
+button,
+div,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}

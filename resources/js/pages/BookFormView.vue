@@ -5,35 +5,18 @@ import { useFetchJson } from "../composables/useFetchJson.js";
 import TheControls from "../components/TheControls.vue";
 import TheAddBookTitle from "../components/TheAddBookTitle.vue";
 
-// État pour suivre si le livre a été ajouté avec succès
-const bookAdded = ref(false);
-// État pour contrôler l'animation de fade-in du message de succès
-const showSuccessMessage = ref(false);
-
 // Setup des données et récupération du livre a afficher
 const data = inject("booksData");
-
-const typeOfForm =
-    window.location.pathname.split("/")[1] === "update" ? "update" : "create";
-const formTitle =
-    typeOfForm === "update" ? "Modifier le livre" : "Ajouter un livre";
-
-const submitTitle =
-    typeOfForm === "update"
-        ? "Enregistrer les modifications"
-        : "Créer le livre";
-
+const bookAdded = ref(false);
+const showSuccessMessage = ref(false);
 const bookId = window.location.pathname.split("/").pop();
 
-const actualBook = computed(() => {
-    return data.value?.books.find((book) => book.id == bookId);
-});
+// Verification du type d'action a faire et ajustement des titres (create ou update)
+const typeOfForm = window.location.pathname.split("/")[1] === "update" ? "update" : "create";
+const formTitle = typeOfForm === "update" ? "Modifier le livre" : "Ajouter un livre";
+const submitTitle = typeOfForm === "update" ? "Enregistrer les modifications" : "Créer le livre";
 
-const bookNotFound = computed(() => {
-    return data.value?.books.find((book) => book.id == bookId) === undefined;
-});
-
-// Form data with default values (échantillon pour Monte-Cristo)
+// Valeurs des inputs préremplies (échantillon pour Monte-Cristo)
 const defaultValues = {
     title: "Le Comte de Monte-Cristo",
     sub_title: "Roman d'aventure",
@@ -49,7 +32,7 @@ const defaultValues = {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Louis_Fran%C3%A7ais-Dant%C3%A8s_sur_son_rocher.jpg/1200px-Louis_Fran%C3%A7ais-Dant%C3%A8s_sur_son_rocher.jpg",
 };
 
-// Initialisation des refs
+// Initialisation des refs pour les valeurs du formulaire
 const title = ref(defaultValues.title);
 const sub_title = ref(defaultValues.sub_title);
 const author = ref(defaultValues.author);
@@ -62,32 +45,20 @@ const editor = ref(defaultValues.editor);
 const isbn = ref(defaultValues.isbn);
 const cover_image_path = ref(defaultValues.cover_image_path);
 
-// Si en mode édition et que le livre existe, remplacer les valeurs par défaut
-watchEffect(() => {
-    console.log(data.value);
-    if (typeOfForm === "update" && !bookNotFound.value && actualBook.value) {
-        console.log("Livre à modifier", actualBook.value);
-
-        title.value = actualBook.value.title;
-        sub_title.value = actualBook.value.sub_title;
-        author.value = actualBook.value.author;
-        reading_status.value = actualBook.value.reading_status;
-        resume.value = actualBook.value.resume;
-        format.value = actualBook.value.format;
-        number_of_pages.value = actualBook.value.number_of_pages;
-        release_date.value = actualBook.value.release_date?.split(" ")[0]; // Pour enlever la partie heure si présente
-        editor.value = actualBook.value.editor;
-        isbn.value = actualBook.value.isbn;
-        cover_image_path.value = actualBook.value.cover_image_path;
-    }
-});
-
-// Form errors
+// Variables pour la gestion de l'état de la requête
 const responseData = ref(null);
 const responseError = ref(null);
 const isLoading = ref(false);
 const formSubmitted = ref(false);
 const errors = ref({});
+
+const actualBook = computed(() => {
+    return data.value?.books.find((book) => book.id == bookId);
+});
+
+const bookNotFound = computed(() => {
+    return data.value?.books.find((book) => book.id == bookId) === undefined;
+});
 
 onMounted(() => {
     // Check if dark mode is already enabled (either by system preference or user choice)
@@ -131,8 +102,6 @@ const submitForm = (e) => {
 };
 
 watchEffect(() => {
-    console.log(responseError.value);
-    console.log(responseData.value);
 
     if (responseData.value) {
         console.log(responseData.value);
@@ -159,6 +128,22 @@ watchEffect(() => {
         errors.value = extractSimpleObject(responseError.value.data.errors);
         console.log(errors.value);
     }
+    
+    if (typeOfForm === "update" && !bookNotFound.value && actualBook.value) {
+        console.log("Livre à modifier", actualBook.value);
+
+        title.value = actualBook.value.title;
+        sub_title.value = actualBook.value.sub_title;
+        author.value = actualBook.value.author;
+        reading_status.value = actualBook.value.reading_status;
+        resume.value = actualBook.value.resume;
+        format.value = actualBook.value.format;
+        number_of_pages.value = actualBook.value.number_of_pages;
+        release_date.value = actualBook.value.release_date?.split(" ")[0]; // Pour enlever la partie heure si présente
+        editor.value = actualBook.value.editor;
+        isbn.value = actualBook.value.isbn;
+        cover_image_path.value = actualBook.value.cover_image_path;
+    }
 });
 
 const extractSimpleObject = (proxyObject) => {
@@ -173,6 +158,8 @@ const extractSimpleObject = (proxyObject) => {
     }
     return result;
 };
+
+
 </script>
 
 <template>

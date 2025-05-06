@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 // Auth routes
 Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister')->middleware('guest');
@@ -13,6 +15,12 @@ Route::delete('/logout', [AuthController::class, 'logout'])->name('logout')->mid
 Route::get('/edit-password', [App\Http\Controllers\PasswordController::class, 'edit'])
   ->name('password.edit')
   ->middleware('auth');
+
+
+Route::get('/', function () {
+  return Auth::check() ? view('index') : view('landing');
+})->name('landing');
+
 
 // Route pour traiter la modification du mot de passe
 Route::post('/password/update', [App\Http\Controllers\PasswordController::class, 'update'])
@@ -32,12 +40,11 @@ Route::prefix('api/v1')->group(function () {
   Route::patch('/update/{id}', [ApiController::class, 'updateBook']);
 
   // Uniques routes
-  Route::post('/create', [ApiController::class, 'createNewBook']);
+  Route::post('/create', [ApiController::class, 'createNewBook'])->middleware('auth');;
 
   // Pictures routes
   Route::get('/picture/book/{id}', [ApiController::class, 'fetchPicture']);
   Route::post('/picture/user/upload', [ApiController::class, 'changeProfilePicture'])->middleware('auth');
-  //Route::get('/picture/user/{id}', [ApiController::class, 'fetchPicture']);
 });
 
 // Vue routes

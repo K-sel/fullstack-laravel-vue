@@ -93,11 +93,23 @@
                         Create account
                     </button>
                 </div>
+                <div>
+                    <div class="text-center mt-4">
+                        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-400 hover:text-white">
+                            Already have an account? Log in
+                        </a>
+                    </div>
 
-                <div class="text-center mt-4">
-                    <a href="{{ route('login') }}" class="text-sm font-medium text-gray-400 hover:text-white">
-                        Already have an account? Log in
-                    </a>
+                    <div class="flex items-center my-6">
+                        <div class="flex-grow border-t border-zinc-700"></div>
+                        <span class="px-4 text-sm text-gray-400">or</span>
+                        <div class="flex-grow border-t border-zinc-700"></div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{{ route('landing') }}" class="text-sm font-medium text-gray-400 hover:text-white">
+                            Return to landing page
+                        </a>
+                    </div>
                 </div>
             </form>
         </div>
