@@ -16,7 +16,7 @@ Cette application permet aux utilisateurs de gérer leur collection de livres de
 </td>
 <td width="50%">
 
-<img src="https://github.com/user-attachments/assets/7c53ae07-20e3-4f42-98c6-1e9640f159b6" alt="Lightshelf Mockup">
+<img src="https://github.com/user-attachments/assets/7c53ae07-20e3-4f42-98c6-1e9640f159b6" alt="Lightshelf Mockup" height="300">
 
 </td>
 </tr>
