@@ -14,6 +14,7 @@
 </head>
 
 <body>
+
     @auth
         @if (Request::path() !== 'edit-password')
             <div id="app"></div>
@@ -23,6 +24,14 @@
     @endauth
 
     @guest
+        @if (Request::is('/'))
+            <style>
+                body {
+                    background-color: #000000;
+                }
+            </style>
+        @endif
+        
         @if (Request::is('login') || Request::is('register'))
             @yield('auth')
         @else
@@ -31,5 +40,9 @@
     @endguest
 
 </body>
+
+
+
+
 
 </html>
