@@ -160,80 +160,63 @@ Cette application permet aux utilisateurs de gérer leur collection de livres de
 - Node.js et npm
 - SQLite (ou autre base de données prise en charge par Laravel)
 
-Voici une version améliorée du markdown pour les instructions d'installation:
+### Étapes d'installation
 
-```markdown
-# Guide d'installation de Lightshelf
+1. **Cloner le dépôt**
+   ```bash
+   git clone https://github.com/votre-username/lightshelf.git
+   cd lightshelf
+   ```
 
-## Étapes d'installation
+2. **Installer les dépendances PHP**
+   ```bash
+   composer install
+   ```
 
-### 1. Cloner le dépôt
+3. **Installer les dépendances JavaScript**
+   ```bash
+   npm install
+   ```
 
-Choisissez l'une des méthodes suivantes:
+4. **Créer le fichier d'environnement**
+   ```bash
+   cp .env.example .env
+   ```
 
-**Option SSH** (recommandée si vous avez configuré une clé SSH):
-```bash
-git clone git@github.com:K-sel/lightshelf.git
-cd lightshelf
-```
+5. **Générer la clé d'application**
+   ```bash
+   php artisan key:generate
+   ```
 
-**Option HTTPS** (si vous n'avez pas configuré de clé SSH):
-```bash
-git clone https://github.com/K-sel/lightshelf.git
-cd lightshelf
-```
+6. **Configurer la base de données**
+   - Éditer le fichier `.env` pour configurer la connexion à la base de données
+   - Par défaut, l'application utilise SQLite
 
-### 2. Installer les dépendances PHP
-```bash
-composer install
-```
+7. **Créer la base de données SQLite**
+   ```bash
+   touch database/database.sqlite
+   ```
 
-### 3. Installer les dépendances JavaScript
-```bash
-npm install
-```
+8. **Exécuter les migrations et seeders**
+   ```bash
+   php artisan migrate --seed
+   ```
 
-### 4. Créer le fichier d'environnement
-```bash
-cp .env.example .env
-```
+9. **Compiler les assets**
+   ```bash
+   npm run build
+   ```
 
-### 5. Générer la clé d'application
-```bash
-php artisan key:generate
-```
+10. **Démarrer le serveur de développement**
+    ```bash
+    composer run dev
+    ```
 
-### 6. Configurer la base de données
-- Éditer le fichier `.env` pour configurer la connexion à la base de données
-- Par défaut, l'application utilise SQLite
-
-### 7. Créer la base de données SQLite
-```bash
-touch database/database.sqlite
-```
-
-### 8. Exécuter les migrations et seeders
-```bash
-php artisan migrate --seed
-```
-
-⚠️ **Attention**: Cette étape peut prendre plusieurs minutes. Les seeders récupèrent des images depuis internet et les transforment en binaire pour les stocker dans la base de données. Soyez patient, c'est normal que cette opération soit longue.
-
-### 9. Compiler les assets
-```bash
-npm run build
-```
-
-### 10. Démarrer le serveur de développement
-```bash
-composer run dev
-```
-
-### 11. Accéder à l'application
-- Ouvrir le navigateur et accéder à `http://localhost:8000`
-- Utiliser les identifiants de test :
-  - Email: `johndoe@seed.com`
-  - Mot de passe: `password1`
+12. **Accéder à l'application**
+    - Ouvrir le navigateur et accéder à `http://localhost:8000`
+    - Utiliser les identifiants de test : 
+      - Email: `johndoe@seed.com` 
+      - Mot de passe: `password1`
 
 ## 🔐 Sécurité
 
