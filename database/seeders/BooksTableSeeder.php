@@ -200,7 +200,7 @@ class BooksTableSeeder extends Seeder
                 'isbn' => $bookData['isbn'],
                 'cover_image' => $image,
                 'cover_image_path' => $bookData['cover_image_path'],
-                'cover_image_name' => basename(parse_url($bookData['cover_image'], PHP_URL_PATH)) || 'image.png',
+                'cover_image_name' => basename(parse_url($bookData['cover_image_path'], PHP_URL_PATH)) || 'image.png',
                 'user_id' => 1,
                 'created_at' => $createdAt,
                 'updated_at' => $updatedAt,
