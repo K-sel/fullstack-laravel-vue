@@ -164,13 +164,13 @@ Cette application permet aux utilisateurs de gérer leur collection de livres de
 
 1. **Cloner le dépôt par SSH ou par HTTPS**
 
-**SSH : **
+**SSH :**
    ```bash
    git clone git@github.com:K-sel/lightshelf.git
    cd lightshelf
    ```
 
-**HTTPS : **
+**HTTPS :**
  ```bash
    git clone https://github.com/K-sel/lightshelf.git
    cd lightshelf
