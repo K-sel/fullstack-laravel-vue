@@ -6,7 +6,7 @@
 </div>
 
 <table>
-<tr>
+<tr width="50%">
 <td>
 
 **Lightshelf** est une application minimaliste de gestion de bibliothèque personnelle développée avec **Laravel** (backend) et **Vue.js** (frontend).
