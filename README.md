@@ -163,18 +163,17 @@ Cette application permet aux utilisateurs de gérer leur collection de livres de
 ### Étapes d'installation
 
 1. **Cloner le dépôt par SSH ou par HTTPS**
+    **SSH :**
+       ```bash
+       git clone git@github.com:K-sel/lightshelf.git
+       cd lightshelf
+       ```
 
-**SSH :**
-   ```bash
-   git clone git@github.com:K-sel/lightshelf.git
-   cd lightshelf
-   ```
-
-**HTTPS :**
- ```bash
-   git clone https://github.com/K-sel/lightshelf.git
-   cd lightshelf
-   ```
+    **HTTPS :**
+     ```bash
+       git clone https://github.com/K-sel/lightshelf.git
+       cd lightshelf
+       ```
 
 2. **Installer les dépendances PHP**
    ```bash
