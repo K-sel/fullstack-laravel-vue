@@ -15,19 +15,22 @@
 
 <style>
     :root {
-         background-color: black;
-     }
-     
-     html, body {
-         background-color: black;
-         overflow-x: hidden;
-     }
+        background-color: black;
+    }
+
+    html,
+    body {
+        background-color: black;
+        overflow-x: hidden;
+    }
 </style>
 
 <body>
     @auth
         @if (Request::path() !== 'edit-password')
             <div id="app"></div>
+        @else
+            @yield('auth')
         @endif
     @endauth
 

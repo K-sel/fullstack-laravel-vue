@@ -25,14 +25,19 @@ onMounted(() => {
 </template>
 
 <style>
-/* Use your CSS variables from root to support dark and light mode */
+
 :root {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
         sans-serif;
+        background-color: var(--bg-default);
+    }
 
-    background-color: var(--bg-default);
-}
+    html,
+    body {
+        background-color: var(--bg-default);
+        overflow-x: hidden;
+    }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {

@@ -29,7 +29,7 @@ const defaultValues = {
     editor: "Gallimard",
     isbn: "978-2-07-040692-1",
     cover_image_path:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Louis_Fran%C3%A7ais-Dant%C3%A8s_sur_son_rocher.jpg/1200px-Louis_Fran%C3%A7ais-Dant%C3%A8s_sur_son_rocher.jpg",
+        "https://bibliows.payot.ch/api/image/F075F74F802C3E21D66806824F92A1D8F955C6DC/front/0/resized/mob_detail",
 };
 
 // Initialisation des refs pour les valeurs du formulaire
@@ -458,9 +458,10 @@ const extractSimpleObject = (proxyObject) => {
 </template>
 
 <style>
+
 /* Using CSS variables from the root to support dark and light mode */
 .bg-bg-default {
-    background-color: var(--bg-default, #121212);
+    background-color: var(--bg-default);
 }
 
 .bg-card-bg {
