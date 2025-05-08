@@ -162,9 +162,9 @@ Cette application permet aux utilisateurs de gérer leur collection de livres de
 
 ### Étapes d'installation
 
-1. **Cloner le dépôt**
+1. **Cloner le dépôt par SSH**
    ```bash
-   git clone https://github.com/votre-username/lightshelf.git
+   git clone git@github.com:K-sel/lightshelf.git
    cd lightshelf
    ```
 
