@@ -3,7 +3,7 @@
 **Lightshelf** est une application minimaliste de gestion de bibliothèque personnelle développée avec **Laravel** (backend) et **Vue.js** (frontend). Cette application permet aux utilisateurs de gérer leur collection de livres de manière intuitive et élégante, avec une interface moderne et réactive.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/7c53ae07-20e3-4f42-98c6-1e9640f159b6" alt="Lightshelf Mockup" width="600">
+  <img src="https://github.com/user-attachments/assets/7c53ae07-20e3-4f42-98c6-1e9640f159b6" alt="Lightshelf Mockup" height="600">
 </p>
 
 ## 📋 Table des matières
