@@ -209,10 +209,10 @@ Cette application permet aux utilisateurs de gérer leur collection de livres de
 
 10. **Démarrer le serveur de développement**
     ```bash
-    php artisan serve
+    composer run dev
     ```
 
-11. **Accéder à l'application**
+12. **Accéder à l'application**
     - Ouvrir le navigateur et accéder à `http://localhost:8000`
     - Utiliser les identifiants de test : 
       - Email: `johndoe@seed.com` 
