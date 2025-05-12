@@ -1,7 +1,7 @@
 # 📚 Lightshelf
 
-**Lightshelf** est une application minimaliste de gestion de bibliothèque personnelle développée avec **Laravel** (backend) et **Vue.js** (frontend).
-Cette application permet aux utilisateurs de gérer leur collection de livres de manière intuitive et élégante, avec une interface moderne et réactive.
+**Lightshelf** est une application minimaliste de gestion de bibliothèque personnelle développée avec **Laravel** (backend) et **Vue.js** (frontend). Cette application permet aux utilisateurs de gérer leur collection de livres de manière intuitive et élégante, avec une interface moderne et réactive.
+
 
 ## 📋 Table des matières
 
@@ -38,78 +38,54 @@ Cette application permet aux utilisateurs de gérer leur collection de livres de
 
 ## 🌟 Fonctionnalités implémentées
 
-### Authentification et gestion de compte
+### Authentification
+- Inscription avec validation et vérification d'unicité email
+- Connexion avec régénération de session (anti-fixation)
+- Modification de profil (prénom, nom, bio)
+- Changement de mot de passe avec validation
 
-1. **Inscription** 
-   - Formulaire de création de compte avec validation côté client et serveur
-   - Vérification d'unicité de l'email
-   - Hashage sécurisé des mots de passe
-   - Redirection intelligente après inscription
+### Gestion des livres
+- Liste des livres avec filtrage par statut (all, read, to-read, pending)
+- Ajout/modification avec métadonnées complètes (titre, auteur, ISBN, etc.)
+- Stockage d'images de couverture (URL → binaire)
+- Suppression avec validation de propriété
 
-2. **Connexion**
-   - Formulaire de connexion sécurisé 
-   - Régénération de session pour prévenir la fixation de session
-   - Conservation de l'état de connexion pendant la navigation
+### Interface
+- Mode sombre/clair (localStorage + préférence système)
+- Design responsive (mobile, tablette, desktop)
+- Animations et transitions pour le feedback utilisateur
 
-3. **Gestion du profil**
-   - Modification des informations personnelles (prénom, nom, bio)
-   - Interface dédiée pour la gestion du compte utilisateur
-   - Option de suppression de compte avec confirmation
+## 🌐 Routes
 
-4. **Sécurité du mot de passe**
-   - Interface dédiée à la modification du mot de passe
-   - Validation de l'ancien mot de passe
-   - Exigences de complexité pour les nouveaux mots de passe
+### Routes d'authentification
+```
+GET  /register            → Formulaire d'inscription
+POST /register            → Traitement de l'inscription
+GET  /login               → Formulaire de connexion
+POST /login               → Traitement de la connexion
+GET  /edit-password       → Formulaire de modification de mot de passe
+POST /password/update     → Traitement du changement de mot de passe
+DELETE /logout            → Déconnexion
+```
 
-### Gestion de la bibliothèque
+### Routes API (prefix: /api/v1)
+```
+GET    /user              → Profil utilisateur
+POST   /user/update       → Mise à jour du profil
+DELETE /user/delete       → Suppression de compte
+GET    /user/books        → Liste des livres de l'utilisateur
+GET    /user/book/{id}    → Détails d'un livre
+POST   /create            → Création d'un livre
+PATCH  /update/{id}       → Modification d'un livre
+DELETE /user/book/{id}    → Suppression d'un livre
+GET    /picture/book/{id} → Image de couverture d'un livre
+```
 
-1. **Affichage des livres**
-   - Vue d'ensemble de tous les livres dans la bibliothèque
-   - Filtrage par statut de lecture (lus, à lire, en cours)
-   - Affichage des couvertures et informations essentielles
-
-2. **Ajout de livre**
-   - Formulaire complet pour ajouter un nouveau livre
-   - Support pour les métadonnées (ISBN, éditeur, nombre de pages, etc.)
-   - Chargement d'image de couverture via URL
-   - Validation des données en temps réel
-
-3. **Modification de livre**
-   - Édition de toutes les propriétés d'un livre existant
-   - Interface de formulaire pré-remplie avec les données actuelles
-   - Feedback visuel lors de la sauvegarde des modifications
-
-4. **Suppression de livre**
-   - Suppression avec dialogue de confirmation
-   - Animation de feedback lors de la suppression réussie
-   - Sécurité côté serveur (vérification que l'utilisateur est propriétaire)
-
-5. **Détails du livre**
-   - Vue détaillée avec toutes les informations d'un livre spécifique
-   - Affichage du résumé et des métadonnées complètes
-   - Statut de lecture avec badge visuel
-
-### Interface utilisateur
-
-1. **Design adaptatif**
-   - Interface responsive s'adaptant à tous les appareils
-   - Optimisé pour mobile, tablette et desktop
-   - Navigation intuitive et fluide
-
-2. **Thème sombre/clair**
-   - Bascule entre thème clair et sombre
-   - Mémorisation de la préférence utilisateur
-   - Respect des préférences système (media query `prefers-color-scheme`)
-
-3. **Feedback utilisateur**
-   - Animations lors des actions importantes
-   - Messages de confirmation et d'erreur
-   - Indicateurs de chargement
-
-4. **Landing page**
-   - Page d'accueil attractive pour les visiteurs non connectés
-   - Animation d'entrée et design moderne
-   - Accès rapide à l'inscription et à la connexion
+### Routes SPA
+```
+GET / → Redirige vers la landing page (non connecté) ou SPA (connecté)
+GET /{any} → Charge la SPA pour toutes les routes non-API
+```
 
 ## 📚 Modèle de données
 
@@ -207,10 +183,10 @@ Cette application permet aux utilisateurs de gérer leur collection de livres de
 
 10. **Démarrer le serveur de développement**
     ```bash
-    composer run dev
+    php artisan serve
     ```
 
-12. **Accéder à l'application**
+11. **Accéder à l'application**
     - Ouvrir le navigateur et accéder à `http://localhost:8000`
     - Utiliser les identifiants de test : 
       - Email: `johndoe@seed.com` 
