@@ -138,7 +138,7 @@ GET /{any} → Charge la SPA pour toutes les routes non-API
 
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/votre-username/lightshelf.git
+   git clone https://github.com/K-sel/lightshelf.git
    cd lightshelf
    ```
 
