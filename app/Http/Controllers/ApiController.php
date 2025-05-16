@@ -13,6 +13,10 @@ class ApiController extends Controller
 {
     public function updateUserProfile(ProfileRequest $request)
     {
+        if (!Auth::check()) {
+            return response()->json(['error' => 'Utilisateur non authentifié'], 401);
+        }
+
         $user = User::findOrFail(Auth::user()->id);
         $user->update($request->validated());
         return response()->json($user, 200);
@@ -20,6 +24,12 @@ class ApiController extends Controller
 
     public function deleteUser()
     {
+        // S'assurer que l'utilisateur est bien authentifié
+        if (!Auth::check()) {
+            return response()->json(['error' => 'Utilisateur non authentifié'], 401);
+        }
+
+        // Supprimer les livres associés à l'utilisateur avant de le supprimer
         try {
             Book::where('user_id', Auth::user()->id)->delete();
             $user = User::findOrFail(Auth::user()->id);
@@ -186,11 +196,10 @@ class ApiController extends Controller
 
     public function deleteBookById($id)
     {
-        $book = Book::findOrFail($id);
-
         if (!Auth::check()) {
             return response()->json(['error' => 'Utilisateur non authentifié'], 401);
         }
+        $book = Book::findOrFail($id);
 
         try {
             if ($book->user_id === Auth::user()->id) {

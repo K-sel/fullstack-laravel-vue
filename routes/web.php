@@ -34,13 +34,13 @@ Route::prefix('api/v1')->group(function () {
   Route::delete('/user/delete', [ApiController::class, 'deleteUser'])->middleware('auth');
   Route::get('/books/all', [ApiController::class, 'fetchAllBooks']);
   Route::get('/user/books', [ApiController::class, 'fetchUserBooks']);
-  Route::post('/user/update', [ApiController::class, 'updateUserProfile']);
+  Route::post('/user/update', [ApiController::class, 'updateUserProfile'])->middleware('auth');
   Route::get('/user/book/{id}', [ApiController::class, 'fetchBookById']);
-  Route::delete('/user/book/{id}', [ApiController::class, 'deleteBookById']);
-  Route::patch('/update/{id}', [ApiController::class, 'updateBook']);
+  Route::delete('/user/book/{id}', [ApiController::class, 'deleteBookById'])->middleware('auth');
+  Route::patch('/update/{id}', [ApiController::class, 'updateBook'])->middleware('auth');
 
   // Uniques routes
-  Route::post('/create', [ApiController::class, 'createNewBook'])->middleware('auth');;
+  Route::post('/create', [ApiController::class, 'createNewBook'])->middleware('auth');
 
   // Pictures routes
   Route::get('/picture/book/{id}', [ApiController::class, 'fetchPicture']);
